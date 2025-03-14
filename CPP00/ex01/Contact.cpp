@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:17:11 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/14 14:46:48 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/14 15:19:27 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,15 @@ Contact :: ~Contact()
 void Contact::set_contact()
 {
 
+}
+
+void Contact::display_short(int index)
+{
+	//cout << "|     Index|First name| Last name|  Nickname|";
+	cout << "|" << index;
+	cout << "|" << first_name_;
+	cout << "|" << last_name_;
+	cout << "|" << nick_name_ << "|" << endl;
 }
 
 void Contact::display_contact(int index)

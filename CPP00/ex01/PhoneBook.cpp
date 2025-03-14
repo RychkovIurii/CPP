@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:17:27 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/14 14:36:10 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/14 17:20:21 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ PhoneBook :: ~PhoneBook()
 
 void PhoneBook :: add_contact()
 {
+	/* string input;
+	while (std::getline(cin, input)) */
 
 }
 
