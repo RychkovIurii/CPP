@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:17:18 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/14 12:30:37 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/14 14:35:32 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,19 @@
 #include <string>
 #include <iomanip>
 
+using std::cin;
+using std::cout;
+using std::endl;
+using std::string;
+
 class Contact
 {
 	private:
-		std::string first_name_;
-		std::string last_name_;
-		std::string nick_name_;
-		std::string phone_number_;
-		std::string darkest_secret_;
+		string first_name_;
+		string last_name_;
+		string nick_name_;
+		string phone_number_;
+		string darkest_secret_;
 	public:
 		Contact();
 		~Contact();
