@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:17:18 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/13 16:46:41 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/14 12:30:37 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,16 @@
 class Contact
 {
 	private:
-		std::string firstName;
-		std::string lastName;
-		std::string nickName;
-		std::string phoneNumber;
-		std::string darkestSecret;
+		std::string first_name_;
+		std::string last_name_;
+		std::string nick_name_;
+		std::string phone_number_;
+		std::string darkest_secret_;
 	public:
-		void setContact();
-		void displayContact(int index);
+		Contact();
+		~Contact();
+		void set_contact();
+		void display_contact(int index);
 };
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:17:32 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/13 16:45:18 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/14 12:29:19 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@
 
 class PhoneBook
 {
+	private:
+		Contact contacts_[8];
+		int contacts_count_;
 	public:
 		PhoneBook();
 		~PhoneBook();
-		void addContact();
-		void searchContact();
-	private:
-		Contact contacts[8];
-		int contactsCount;
+		void add_contact();
+		void search_contact();
 };
 
 #endif
