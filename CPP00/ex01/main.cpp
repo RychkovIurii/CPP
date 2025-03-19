@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:17:23 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/19 11:56:54 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/19 12:56:58 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,10 @@ int	main(int argc, char **argv)
 						}
 					}
 					if (!cin.eof())
+					{
+						phonebook.search_contact();
 						cout << "Enter index. The program only accepts numbers from 1 to 8 or EXIT to main menu" << endl;
+					}
 				}
 			}
 		}
