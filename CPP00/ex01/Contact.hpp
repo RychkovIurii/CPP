@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:17:18 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/17 18:11:57 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/19 12:23:14 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ class Contact
 		string phone_number_;
 		string darkest_secret_;
 		string formatField( string &field);
+		void take_input(string output, string &element);
 	public:
 		Contact();
 		~Contact();

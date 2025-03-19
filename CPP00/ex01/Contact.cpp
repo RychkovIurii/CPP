@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:17:11 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/17 18:14:16 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/19 12:40:14 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,32 @@ string Contact :: formatField(string &field)
 	return (field);
 }
 
-void Contact::set_contact()
+void Contact :: take_input(string output, string &element)
 {
-	cout << "Enter first name: ";
-	std::getline(cin, first_name_); // check ctlr + d
-	cout << "Enter last name: ";
-	std::getline(cin, last_name_);
-	cout << "Enter nickname: ";
-	std::getline(cin, nick_name_);
-	cout << "Enter phone number: ";
-	std::getline(cin, phone_number_);
-	cout << "Enter darkest secret: ";
-	std::getline(cin, darkest_secret_);
+	if (!cin.eof())
+		cout << output;
+	std::getline(cin, element);
+	if (cin.eof())
+		return ;
+	while (element.compare("") == 0)
+	{
+		cout << output;
+		std::getline(cin, element);
+		if (cin.eof())
+			return ;
+	}
+	
+}
+
+void Contact :: set_contact()
+{
+	take_input("Enter first name: ", first_name_);
+	take_input("Enter last name: ", last_name_);
+	take_input("Enter nickname: ", nick_name_);
+	take_input("Enter phone number: ", phone_number_);
+	take_input("Enter darkest secret: ", darkest_secret_);
+	if (!cin.eof())
+		cout << "Contact added." << endl;
 }
 
 void Contact::display_short(int index)
