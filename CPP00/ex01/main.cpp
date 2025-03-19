@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:17:23 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/19 12:56:58 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/19 18:28:50 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	main(int argc, char **argv)
 			{
 				phonebook.search_contact();
 				if (!cin.eof())
-					cout << "Enter index. The program only accepts numbers from 1 to 8 or EXIT to main menu" << endl;
+					cout << "Enter index. The program only accepts index from 1 to " << phonebook.get_contact_count() << " or EXIT to main menu" << endl;
 				while (std::getline(cin, input))
 				{
 					if (input.compare("EXIT\0") == 0)
@@ -58,18 +58,12 @@ int	main(int argc, char **argv)
 					{
 						int index = stoi(input);
 						if (index > 0 && index <= phonebook.get_contact_count())
-						{
-							phonebook.get_contact(index - 1).display_contact(index);
-						}
-						else
-						{
-							cout << "Invalid index" << endl;
-						}
+							phonebook.get_contact(index - 1).display_contact();
 					}
 					if (!cin.eof())
 					{
-						phonebook.search_contact();
-						cout << "Enter index. The program only accepts numbers from 1 to 8 or EXIT to main menu" << endl;
+						//phonebook.search_contact();
+						cout << "Enter index. The program only accepts numbers from 1 to " << phonebook.get_contact_count() << " or EXIT to main menu" << endl;
 					}
 				}
 			}

@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:17:18 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/19 12:23:14 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/19 18:12:40 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ class Contact
 		~Contact();
 		void set_contact();
 		void display_short(int index);
-		void display_contact(int index);
+		void display_contact();
 };
 
 #endif

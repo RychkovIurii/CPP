@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:17:27 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/19 12:48:27 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/19 17:44:13 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,14 @@ void PhoneBook :: add_contact()
 
 void PhoneBook :: search_contact()
 {
-	cout << "_____________________________________________" << endl;
+	cout << "---------------------------------------------" << endl;
 	cout << "|     Index|First Name| Last Name|  Nickname|" << endl;
+	cout << "---------------------------------------------" << endl;
 	for (int i = 0; i < contacts_count_; i++)
 	{
 		contacts_[i].display_short(i + 1);
+		cout << "---------------------------------------------" << endl;
 	}
-	cout << "_____________________________________________" << endl;
 }
 
 int PhoneBook :: get_contact_count()

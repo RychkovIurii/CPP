@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:17:11 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/19 12:40:14 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/19 18:11:07 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void Contact::display_short(int index)
 	cout << "|" << std::setw(10) << formatField(nick_name_) << "|" << endl;
 }
 
-void Contact::display_contact(int index)
+void Contact::display_contact()
 {
 	cout << "First name:     " << first_name_ << endl;
 	cout << "Last name:      " << last_name_ << endl;
