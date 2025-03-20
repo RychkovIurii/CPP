@@ -6,7 +6,7 @@
 #    By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/13 16:02:27 by irychkov          #+#    #+#              #
-#    Updated: 2025/03/13 16:03:59 by irychkov         ###   ########.fr        #
+#    Updated: 2025/03/20 18:53:50 by irychkov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,10 @@ CFLAGS = -Wall -Wextra -Werror -std=c++98
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(COMPILER) $(CFLAGS) $(OBJ) -o $(NAME)
+	$(COMPILER) $(CFLAGS) -o $(NAME) $(OBJ)
+
+%.o: %.cpp
+	$(COMPILER) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJ)

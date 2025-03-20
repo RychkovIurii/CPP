@@ -6,20 +6,23 @@
 #    By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/19 20:06:41 by irychkov          #+#    #+#              #
-#    Updated: 2025/03/19 20:08:23 by irychkov         ###   ########.fr        #
+#    Updated: 2025/03/20 18:53:01 by irychkov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = account
-SRC = tests.cpp Account.cpp
-OBJ = $(SRC:.cpp=.o)
+SRCS = tests.cpp Account.cpp
+OBJ = $(SRCS:.cpp=.o)
 COMPILER = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(COMPILER) $(CFLAGS) $(OBJ) -o $(NAME)
+	$(COMPILER) $(CFLAGS) -o $(NAME) $(OBJ)
+
+%.o: %.cpp
+	$(COMPILER) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJ)
