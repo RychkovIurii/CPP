@@ -6,7 +6,7 @@
 #    By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/20 12:50:34 by irychkov          #+#    #+#              #
-#    Updated: 2025/03/20 12:51:39 by irychkov         ###   ########.fr        #
+#    Updated: 2025/03/20 15:52:28 by irychkov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = hordeOfZombies
 SRCS = main.cpp Zombie.cpp zombieHorde.cpp
 OBJ = $(SRCS:.cpp=.o)
 COMPILER = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98
+CFLAGS = -Wall -Wextra -Werror -std=c++11
 
 all: $(NAME)
 
