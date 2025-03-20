@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:17:18 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/19 18:12:40 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/20 10:28:22 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,22 @@
 #include <string>
 #include <iomanip>
 
-using std::cin;
-using std::cout;
-using std::endl;
-using std::string;
-
-class Contact
+class	Contact
 {
 	private:
-		string first_name_;
-		string last_name_;
-		string nick_name_;
-		string phone_number_;
-		string darkest_secret_;
-		string formatField( string &field);
-		void take_input(string output, string &element);
+		std::string	first_name_;
+		std::string	last_name_;
+		std::string	nick_name_;
+		std::string	phone_number_;
+		std::string	darkest_secret_;
+		std::string	formatField( std::string &field);
+		void		take_input( std::string output, std::string &element );
 	public:
-		Contact();
-		~Contact();
-		void set_contact();
-		void display_short(int index);
-		void display_contact();
+		Contact( void );
+		~Contact( void );
+		void	set_contact( void );
+		void	display_short( int index );
+		void	display_contact( void );
 };
 
 #endif

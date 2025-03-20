@@ -6,23 +6,20 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:17:27 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/19 17:44:13 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/20 10:31:37 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PhoneBook.hpp"
 
-PhoneBook :: PhoneBook()
+PhoneBook :: PhoneBook( void )
 {
 	contacts_count_ = 0;
 }
 
-PhoneBook :: ~PhoneBook()
-{
-	
-}
+PhoneBook :: ~PhoneBook( void ) { }
 
-void PhoneBook :: add_contact()
+void	PhoneBook :: add_contact( void )
 {
 	if (contacts_count_ < 8)
 	{
@@ -39,24 +36,24 @@ void PhoneBook :: add_contact()
 	}
 }
 
-void PhoneBook :: search_contact()
+void	PhoneBook :: search_contact( void )
 {
-	cout << "---------------------------------------------" << endl;
-	cout << "|     Index|First Name| Last Name|  Nickname|" << endl;
-	cout << "---------------------------------------------" << endl;
+	std::cout << "---------------------------------------------" << std::endl;
+	std::cout << "|     Index|First Name| Last Name|  Nickname|" << std::endl;
+	std::cout << "---------------------------------------------" << std::endl;
 	for (int i = 0; i < contacts_count_; i++)
 	{
 		contacts_[i].display_short(i + 1);
-		cout << "---------------------------------------------" << endl;
+		std::cout << "---------------------------------------------" << std::endl;
 	}
 }
 
-int PhoneBook :: get_contact_count()
+int	PhoneBook :: get_contact_count( void )
 {
 	return (contacts_count_);
 }
 
-Contact& PhoneBook :: get_contact(int index)
+Contact&	PhoneBook :: get_contact( int index )
 {
 	return (contacts_[index]);
 }

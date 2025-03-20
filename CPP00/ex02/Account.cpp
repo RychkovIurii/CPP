@@ -6,12 +6,13 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 20:31:47 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/19 20:33:30 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/20 10:50:13 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Account.hpp"
 #include <iostream>
+#include <ctime>
 
 int	Account :: _nbAccounts = 0;
 int	Account :: _totalAmount = 0;
@@ -40,9 +41,11 @@ int	Account :: getNbWithdrawals( void )
 
 void	Account :: _displayTimestamp( void )
 {
-	// here we need to implement the function that will display the current time
-	// for now we will just print the string "timestamp"
-	std::cout << "timestamp";
+	time_t timestamp;
+	time(&timestamp); 
+	char buffer [16];
+	strftime(buffer, 80, "%Y%m%d_%H%M%S", localtime(&timestamp));
+	std::cout << "[" << buffer << "]";
 }
 
 void	Account :: displayAccountsInfos( void )
@@ -77,12 +80,29 @@ Account :: ~Account( void )
 
 void	Account :: makeDeposit( int deposit )
 {
-
+	_amount += deposit;
+	_nbDeposits++;
+	_totalAmount += deposit;
+	_totalNbDeposits++;
+	_displayTimestamp();
+	std::cout << " index:" << _accountIndex << ";p_amount:" << _amount - deposit << ";deposit:" << deposit << ";amount:" << _amount << ";nb_deposits:" << _nbDeposits << std::endl;
 }
 
 bool	Account :: makeWithdrawal( int withdrawal )
 {
-	return (true); // for now
+	if (_amount < withdrawal)
+	{
+		_displayTimestamp();
+		std::cout << " index:" << _accountIndex << ";p_amount:" << _amount << ";withdrawal:refused" << std::endl;
+		return (false);
+	}
+	_amount -= withdrawal;
+	_nbWithdrawals++;
+	_totalAmount -= withdrawal;
+	_totalNbWithdrawals++;
+	_displayTimestamp();
+	std::cout << " index:" << _accountIndex << ";p_amount:" << _amount + withdrawal << ";withdrawal:" << withdrawal << ";amount:" << _amount << ";nb_withdrawals:" << _nbWithdrawals << std::endl;
+	return (true);
 }
 
 int	Account :: checkAmount( void ) const
