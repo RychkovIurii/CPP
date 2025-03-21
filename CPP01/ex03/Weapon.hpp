@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 18:12:23 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/20 19:01:45 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/21 12:10:37 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,12 @@
 # include <iostream>
 # include <string>
 
-class Weapon {
+class	Weapon {
 	public:
 		Weapon( std::string type );
 		~Weapon( void );
-		const std::string &getType( void) const;
-
-
+		const std::string &getType( void ) const;
+		void setType( std::string type );
 	private:
 		std::string type;
 };
