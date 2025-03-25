@@ -1,0 +1,2 @@
+This is ex04. In ex04 you have to check newline in s1.
+I found ex04 quite interesting.
