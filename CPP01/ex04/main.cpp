@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:19:17 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/25 15:10:41 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/25 15:51:37 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,39 @@
 #include <fstream>
 #include <filesystem>
 
-int	main(int argc, char **argv)
+static void	check_args(int argc, char **argv)
 {
 	if (argc != 4)
 	{
 		std::cout << "Usage: ./replace filename s1 s2" << std::endl;
-		return (0);
+		exit (0);
 	}
+	if (argv[2][0] == '\0' || argv[1][0] == '\0')
+	{
+		std::cerr << "Error: s1 and filename must not be empty" << std::endl;
+		exit (1);
+	}
+}
+
+static void	replace(std::string &line, std::string s1, std::string s2)
+{
+	std::string new_line;
+	std::size_t pos = 0;
+	while ((pos = line.find(s1, pos)) != std::string::npos)
+	{
+		new_line = line.substr(0, pos) + s2 + line.substr(pos + s1.length());
+		line = new_line;
+		pos += s2.length();
+	}
+}
+
+int	main(int argc, char **argv)
+{
+	check_args(argc, argv);
 	std::string filename = argv[1];
 	std::string s1 = argv[2];
 	std::string s2 = argv[3];
 	std::ifstream file(filename);
-	if (s1.empty() || filename.empty())
-	{
-		std::cerr << "Error: s1 and filename must not be empty" << std::endl;
-		return (1);
-	}
-	std::cout << "s1: {" << s1 << "}" << std::endl;
-	std::cout << "s2: {" << s2 << "}" << std::endl;
 	if(!file.is_open())
 	{
 		std::cerr << "Error: could not open file" << filename << std::endl;
@@ -48,16 +63,7 @@ int	main(int argc, char **argv)
 	std::string line;
 	std::getline(file, line, '\0');
 	if (s1 != s2)
-	{
-		std::string new_line;
-		std::size_t pos = 0;
-		while ((pos = line.find(s1, pos)) != std::string::npos)
-		{
-			new_line = line.substr(0, pos) + s2 + line.substr(pos + s1.length());
-			line = new_line;
-			pos += s2.length();
-		}
-	}
+		replace(line, s1, s2);
 	new_file << line;
 	return (0);
 }
