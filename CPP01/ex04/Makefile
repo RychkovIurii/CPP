@@ -6,7 +6,7 @@
 #    By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/21 12:16:48 by irychkov          #+#    #+#              #
-#    Updated: 2025/03/21 12:18:54 by irychkov         ###   ########.fr        #
+#    Updated: 2025/03/25 13:46:42 by irychkov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = replace
 SRCS = main.cpp
 OBJ = $(SRCS:.cpp=.o)
 COMPILER = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++11
+CFLAGS = -Wall -Wextra -Werror -std=c++17
 
 all: $(NAME)
 
