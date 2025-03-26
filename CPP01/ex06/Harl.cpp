@@ -6,12 +6,11 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:37:58 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/26 14:46:00 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:49:09 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Harl.hpp"
-#include <bits/stdc++.h>
 
 Harl :: Harl( void )
 {

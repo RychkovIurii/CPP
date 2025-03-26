@@ -6,11 +6,12 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:37:32 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/26 14:48:50 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:55:56 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
+#include <string>
 
 class Harl
 {
