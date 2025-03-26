@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 11:54:36 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/26 10:03:14 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/26 17:27:34 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ of the object that was destroyed */
 	/* Zombie *zombie2 = newStackZombie("Stack guy");
 	zombie2->announce(); */
 
-int	main()
+int	main( void )
 {
 	Zombie*	zombie = nullptr;
 	try

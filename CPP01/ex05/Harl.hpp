@@ -6,9 +6,11 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:31:36 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/26 16:53:27 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/26 17:32:23 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#pragma once
 
 #include <iostream>
 #include <string>

@@ -6,13 +6,13 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:55:09 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/20 16:50:11 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/26 17:27:58 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Zombie.hpp"
 
-int	main()
+int	main( void )
 {
 	Zombie*	horde = nullptr;
 	Zombie*	horde2 = nullptr;
