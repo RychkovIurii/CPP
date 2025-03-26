@@ -6,14 +6,14 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:37:58 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/26 13:58:26 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/26 14:46:00 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Harl.hpp"
 #include <bits/stdc++.h>
 
-Harl :: Harl()
+Harl :: Harl( void )
 {
 	this->levels[0] = "DEBUG";
 	this->levels[1] = "INFO";
@@ -25,7 +25,7 @@ Harl :: Harl()
 	this->functions[3] = &Harl::error;
 }
 
-Harl :: ~Harl() { }
+Harl :: ~Harl( void ) { }
 
 void Harl :: debug( void )
 {
