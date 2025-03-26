@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:31:36 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/26 12:06:47 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/26 12:37:21 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,3 @@ class Harl
 		~Harl();
 		void complain( std::string level );
 };
-

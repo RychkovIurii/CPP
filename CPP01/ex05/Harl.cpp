@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:31:40 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/26 12:34:40 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/26 13:51:57 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ void Harl :: error( void )
 
 void Harl :: complain ( std::string level )
 {
-	int index = std::find(std::begin(this->levels), std::end(this->levels), level) - std::begin(this->levels);
+	int index = 0;
+	while (index < 4 && levels[index] != level)
+		index++;
 	(this->*functions[index])();
 	/* switch (index)
 	{
