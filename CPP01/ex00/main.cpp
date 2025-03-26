@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 11:54:36 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/20 16:59:05 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/26 10:03:14 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main()
 	}
 	catch (const std::bad_alloc&)
 	{
-		std::cout << "Memory allocation failed" << std::endl;
+		std::cerr << "Memory allocation failed" << std::endl;
 		return (1);
 	}
 	randomChump("Random stack guy");

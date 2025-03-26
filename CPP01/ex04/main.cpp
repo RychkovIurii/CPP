@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:19:17 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/25 15:51:37 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/26 10:01:16 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ static void	check_args(int argc, char **argv)
 	if (argc != 4)
 	{
 		std::cout << "Usage: ./replace filename s1 s2" << std::endl;
-		exit (0);
+		std::exit (0);
 	}
 	if (argv[2][0] == '\0' || argv[1][0] == '\0')
 	{
 		std::cerr << "Error: s1 and filename must not be empty" << std::endl;
-		exit (1);
+		std::exit (1);
 	}
 }
 
