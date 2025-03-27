@@ -6,14 +6,14 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 08:58:06 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/27 12:11:15 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/27 15:35:46 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
 #include <iostream>
 #include <cmath>
-#include <limits>
+#include <climits>
 
 Fixed :: Fixed( void ) : _fixed_point_value(0) {
 	std::cout << "Default constructor called" << std::endl;
@@ -21,8 +21,8 @@ Fixed :: Fixed( void ) : _fixed_point_value(0) {
 
 Fixed :: Fixed ( const int value ) {
 	std::cout << "Int constructor called" << std::endl;
-	if (value > std::numeric_limits<int>::max()/256
-		|| value < std::numeric_limits<int>::min()/256)
+	if (value > INT_MAX / 256
+		|| value < INT_MIN / 256)
 	{
 		std::cerr << "Error: value " << value << " is out of range" << std::endl;
 		std::exit(1);
@@ -33,8 +33,8 @@ Fixed :: Fixed ( const int value ) {
 
 Fixed :: Fixed ( const float value ) {
 	std::cout << "Float constructor called" << std::endl;
-	if (value > std::numeric_limits<int>::max() / (1 << _fractional_bits)
-		|| value < std::numeric_limits<int>::min() / (1 << _fractional_bits))
+	if (value > INT_MAX / (1 << _fractional_bits)
+		|| value < INT_MIN / (1 << _fractional_bits))
 	{
 		std::cerr << "Error: value " << value << " is out of range" << std::endl;
 		std::exit(1);
