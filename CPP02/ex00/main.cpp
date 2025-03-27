@@ -6,12 +6,11 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 08:58:14 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/27 09:13:50 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/27 15:47:01 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
-#include <iostream>
 
 int	main( void )
 {
