@@ -6,13 +6,17 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 08:58:14 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/27 09:21:24 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/27 11:30:09 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
 #include <iostream>
 
+/*
+Our program handle input use 8 bits for fractional part.
+Min value is -8388608, max value is 8388607.
+*/
 int	main( void )
 {
 	Fixed		a;

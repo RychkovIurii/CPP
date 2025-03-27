@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 08:58:11 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/27 09:38:29 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/27 09:48:17 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,3 +30,5 @@ class Fixed {
 		float	toFloat(void) const;
 		int		toInt(void) const;
 };
+
+std::ostream &operator<<(std::ostream &out, Fixed const &obj);
