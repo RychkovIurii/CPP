@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:37:58 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/26 16:49:09 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/27 18:08:18 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void Harl :: complain ( std::string level )
 			index++;
 		case 3:
 			(this->*functions[index])();
-			index++;
 			break;
 		default:
 			std::cout << "[ Probably complaining about insignificant problem ]" << std::endl;
