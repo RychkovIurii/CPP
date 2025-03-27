@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 08:58:11 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/27 16:09:57 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/27 18:32:20 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,21 @@ class Fixed {
 		Fixed( const float value );
 		Fixed( const Fixed &obj );
 		~Fixed( void );
-		Fixed &operator=(const Fixed &obj);
-		Fixed &operator>(const Fixed &obj);
-		Fixed &operator<(const Fixed &obj);
-		Fixed &operator>=(const Fixed &obj);
-		Fixed &operator<=(const Fixed &obj);
-		Fixed &operator==(const Fixed &obj);
-		Fixed &operator!=(const Fixed &obj);
-		Fixed &operator+(const Fixed &obj);
-		Fixed &operator-(const Fixed &obj);
-		Fixed &operator*(const Fixed &obj);
-		Fixed &operator/(const Fixed &obj);
+		Fixed &operator=( const Fixed &obj );
+		Fixed &operator>( const Fixed &obj );
+		Fixed &operator<( const Fixed &obj );
+		Fixed &operator>=( const Fixed &obj );
+		Fixed &operator<=( const Fixed &obj );
+		Fixed &operator==( const Fixed &obj );
+		Fixed &operator!=( const Fixed &obj );
+		Fixed &operator+( const Fixed &obj );
+		Fixed &operator-( const Fixed &obj );
+		Fixed &operator*( const Fixed &obj );
+		Fixed &operator/( const Fixed &obj );
+		Fixed &operator++( void );
+		Fixed &operator--( void );
+		Fixed operator++( int );
+		Fixed operator--( int );
 		int		getRawBits(void) const;
 		void	setRawBits(int const raw);
 		float	toFloat(void) const;
