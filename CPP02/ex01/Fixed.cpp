@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 08:58:06 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/27 11:27:29 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/27 12:11:15 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,8 @@ Fixed :: Fixed( const Fixed &obj ) {
 Fixed :: ~Fixed( void ) {
 	std::cout << "Destructor called" << std::endl;
 }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+
 int Fixed :: getRawBits(void) const {
-	std::cout << "getRawBits member function called" << std::endl;
 	return (_fixed_point_value);
 }
 
