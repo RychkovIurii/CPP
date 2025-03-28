@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 08:58:06 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/27 15:49:27 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/28 10:35:42 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ Fixed :: Fixed( void ) : _fixed_point_value(0) {
 
 Fixed :: Fixed ( const int value ) {
 	std::cout << "Int constructor called" << std::endl;
-	if (value > INT_MAX / 256
-		|| value < INT_MIN / 256)
+	if (value > (INT_MAX >> _fractional_bits)
+		|| value < (INT_MIN >> _fractional_bits))
 	{
 		std::cerr << "Error: value " << value << " is out of range" << std::endl;
 		std::exit(1);
