@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 08:58:06 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/28 10:35:51 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:39:09 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ Fixed :: Fixed ( const int value ) {
 	}
 	else
 		_fixed_point_value = value << _fractional_bits;
+	//std::cout << "value: " << _fixed_point_value << "\n";
 }
 
 Fixed :: Fixed ( const float value ) {
@@ -39,7 +40,8 @@ Fixed :: Fixed ( const float value ) {
 		std::exit(1);
 	}
 	else
-	_fixed_point_value = roundf(value * (1 << _fractional_bits));
+		_fixed_point_value = roundf(value * (1 << _fractional_bits));
+	//std::cout << "value: " << _fixed_point_value << "\n";
 }
 
 Fixed :: Fixed( const Fixed &obj ) {
@@ -89,4 +91,94 @@ bool Fixed :: operator<( const Fixed &obj ) {
 
 bool Fixed :: operator>=( const Fixed &obj ) {
 	return (_fixed_point_value >= obj.getRawBits());
+}
+
+bool Fixed :: operator<=( const Fixed &obj ) {
+	return (_fixed_point_value <= obj.getRawBits());
+}
+
+bool Fixed :: operator==( const Fixed &obj ) {
+	return (_fixed_point_value == obj.getRawBits());
+}
+
+bool Fixed :: operator!=( const Fixed &obj ) {
+	return (_fixed_point_value != obj.getRawBits());
+}
+
+Fixed Fixed :: operator+( const Fixed &obj ) {
+	Fixed result;
+	long long sum = static_cast<long long>(_fixed_point_value) + static_cast<long long>(obj.getRawBits());
+
+	if ((sum > INT_MAX || sum < INT_MIN))
+	{
+		std::cerr << "Error: overflow" << std::endl;
+		std::exit(1);
+	}
+	result.setRawBits(static_cast<int>(sum));
+	return (result);
+}
+
+Fixed Fixed :: operator-( const Fixed &obj ) {
+	Fixed result;
+	long long diff = static_cast<long long>(_fixed_point_value) - static_cast<long long>(obj.getRawBits());
+	if ((diff > INT_MAX || diff < INT_MIN))
+	{
+		std::cerr << "Error: overflow" << std::endl;
+		std::exit(1);
+	}
+	result.setRawBits(static_cast<int>(diff));
+	return (result);
+}
+
+Fixed Fixed :: operator*( const Fixed &obj ) {
+	Fixed result;
+	long long product = (static_cast<long long>(_fixed_point_value) * static_cast<long long>(obj.getRawBits()));
+	product = product >> _fractional_bits;
+	if ((product > INT_MAX || product < INT_MIN))
+	{
+		std::cerr << "Error: overflow" << std::endl;
+		std::exit(1);
+	}
+	result.setRawBits(static_cast<int>(product));
+	return (result);
+}
+
+Fixed Fixed :: operator/( const Fixed &obj ) {
+	Fixed result;
+	int second_raw = obj.getRawBits();
+	if (second_raw == 0)
+	{
+		std::cerr << "Error: division by zero" << std::endl; // throw std::runtime_error("Error: division by zero");
+		std::exit(1);
+	}
+	long long quotient = (static_cast<long long>(_fixed_point_value << _fractional_bits) / static_cast<long long>(second_raw));
+	if ((quotient > INT_MAX || quotient < INT_MIN))
+	{
+		std::cerr << "Error: overflow" << std::endl;
+		std::exit(1);
+	}
+	result.setRawBits(static_cast<int>(quotient));
+	return (result);
+}
+
+Fixed Fixed :: operator++( void ) {
+	++_fixed_point_value;
+	return (*this);
+}
+
+Fixed Fixed :: operator--( void ) {
+	--_fixed_point_value;
+	return (*this);
+}
+
+Fixed Fixed :: operator--( int ) {
+	Fixed tmp(*this);
+	_fixed_point_value--;
+	return (tmp);
+}
+
+Fixed Fixed :: operator++( int ) {
+	Fixed tmp(*this);
+	_fixed_point_value++;
+	return (tmp);
 }
