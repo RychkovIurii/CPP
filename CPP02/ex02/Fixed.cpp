@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 08:58:06 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/28 16:39:09 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/03/31 13:04:16 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,22 +162,42 @@ Fixed Fixed :: operator/( const Fixed &obj ) {
 }
 
 Fixed Fixed :: operator++( void ) {
+	if (_fixed_point_value == INT_MAX)
+	{
+		std::cerr << "Error: overflow" << std::endl;
+		std::exit(1);
+	}
 	++_fixed_point_value;
 	return (*this);
 }
 
 Fixed Fixed :: operator--( void ) {
 	--_fixed_point_value;
+	if (_fixed_point_value == INT_MIN)
+	{
+		std::cerr << "Error: overflow" << std::endl;
+		std::exit(1);
+	}
 	return (*this);
 }
 
 Fixed Fixed :: operator--( int ) {
+	if (_fixed_point_value == INT_MIN)
+	{
+		std::cerr << "Error: overflow" << std::endl;
+		std::exit(1);
+	}
 	Fixed tmp(*this);
 	_fixed_point_value--;
 	return (tmp);
 }
 
 Fixed Fixed :: operator++( int ) {
+	if (_fixed_point_value == INT_MAX)
+	{
+		std::cerr << "Error: overflow" << std::endl;
+		std::exit(1);
+	}
 	Fixed tmp(*this);
 	_fixed_point_value++;
 	return (tmp);
