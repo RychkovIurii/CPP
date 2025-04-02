@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 08:58:06 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/31 13:04:16 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/02 12:31:26 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,27 +81,27 @@ std::ostream &operator<<(std::ostream &out, Fixed const &obj) {
 	return (out);
 }
 
-bool Fixed :: operator>( const Fixed &obj ) {
+bool Fixed :: operator>( const Fixed &obj ) const {
 	return (_fixed_point_value > obj.getRawBits());
 }
 
-bool Fixed :: operator<( const Fixed &obj ) {
+bool Fixed :: operator<( const Fixed &obj ) const {
 	return (_fixed_point_value < obj.getRawBits());
 }
 
-bool Fixed :: operator>=( const Fixed &obj ) {
+bool Fixed :: operator>=( const Fixed &obj ) const {
 	return (_fixed_point_value >= obj.getRawBits());
 }
 
-bool Fixed :: operator<=( const Fixed &obj ) {
+bool Fixed :: operator<=( const Fixed &obj ) const {
 	return (_fixed_point_value <= obj.getRawBits());
 }
 
-bool Fixed :: operator==( const Fixed &obj ) {
+bool Fixed :: operator==( const Fixed &obj ) const {
 	return (_fixed_point_value == obj.getRawBits());
 }
 
-bool Fixed :: operator!=( const Fixed &obj ) {
+bool Fixed :: operator!=( const Fixed &obj ) const {
 	return (_fixed_point_value != obj.getRawBits());
 }
 
@@ -172,12 +172,12 @@ Fixed Fixed :: operator++( void ) {
 }
 
 Fixed Fixed :: operator--( void ) {
-	--_fixed_point_value;
 	if (_fixed_point_value == INT_MIN)
 	{
 		std::cerr << "Error: overflow" << std::endl;
 		std::exit(1);
 	}
+	--_fixed_point_value;
 	return (*this);
 }
 
@@ -201,4 +201,32 @@ Fixed Fixed :: operator++( int ) {
 	Fixed tmp(*this);
 	_fixed_point_value++;
 	return (tmp);
+}
+
+Fixed &Fixed :: min(Fixed &a, Fixed &b)
+{
+	if ( a < b )
+		return (a);
+	return (b);
+}
+
+Fixed &Fixed :: max(Fixed &a, Fixed &b)
+{
+	if ( a > b )
+		return (a);
+	return (b);
+}
+
+const Fixed &Fixed :: min(const Fixed &a, const Fixed &b)
+{
+	if ( a < b )
+		return (a);
+	return (b);
+}
+
+const Fixed &Fixed :: max(const Fixed &a, const Fixed &b)
+{
+	if ( a > b )
+		return (a);
+	return (b);
 }
