@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 08:58:06 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/02 12:31:26 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/02 12:50:37 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,9 @@
 #include <cmath>
 #include <climits>
 
-Fixed :: Fixed( void ) : _fixed_point_value(0) {
-	std::cout << "Default constructor called" << std::endl;
-}
+Fixed :: Fixed( void ) : _fixed_point_value(0) { }
 
 Fixed :: Fixed ( const int value ) {
-	std::cout << "Int constructor called" << std::endl;
 	if (value > (INT_MAX >> _fractional_bits)
 		|| value < (INT_MIN >> _fractional_bits))
 	{
@@ -28,11 +25,9 @@ Fixed :: Fixed ( const int value ) {
 	}
 	else
 		_fixed_point_value = value << _fractional_bits;
-	//std::cout << "value: " << _fixed_point_value << "\n";
 }
 
 Fixed :: Fixed ( const float value ) {
-	std::cout << "Float constructor called" << std::endl;
 	if (value > INT_MAX / (1 << _fractional_bits)
 		|| value < INT_MIN / (1 << _fractional_bits))
 	{
@@ -41,29 +36,23 @@ Fixed :: Fixed ( const float value ) {
 	}
 	else
 		_fixed_point_value = roundf(value * (1 << _fractional_bits));
-	//std::cout << "value: " << _fixed_point_value << "\n";
 }
 
 Fixed :: Fixed( const Fixed &obj ) {
-	std::cout << "Copy constructor called" << std::endl;
 	*this = obj;
 }
 
-Fixed :: ~Fixed( void ) {
-	std::cout << "Destructor called" << std::endl;
-}
+Fixed :: ~Fixed( void ) { }
 
 int Fixed :: getRawBits(void) const {
 	return (_fixed_point_value);
 }
 
 void Fixed :: setRawBits(int const raw) {
-	std::cout << "setRawBits member function called" << std::endl;
 	_fixed_point_value = raw;
 }
 
 Fixed &Fixed :: operator=(const Fixed &obj) {
-	std::cout << "Copy assignment operator called" << std::endl;
 	_fixed_point_value = obj.getRawBits();
 	return (*this);
 }
@@ -148,7 +137,7 @@ Fixed Fixed :: operator/( const Fixed &obj ) {
 	int second_raw = obj.getRawBits();
 	if (second_raw == 0)
 	{
-		std::cerr << "Error: division by zero" << std::endl; // throw std::runtime_error("Error: division by zero");
+		std::cerr << "Error: division by zero" << std::endl;
 		std::exit(1);
 	}
 	long long quotient = (static_cast<long long>(_fixed_point_value << _fractional_bits) / static_cast<long long>(second_raw));
