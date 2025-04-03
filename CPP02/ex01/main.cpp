@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 08:58:14 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/27 15:46:53 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/03 10:42:39 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,14 @@
 Our program handle input use 8 bits for fractional part.
 Min value is -8388608, max value is 8388607.
 */
+
+/* // TEST for overflow
+{
+	Fixed const x( 8388699 );
+	Fixed y( -8388699.9f );
+}
+ */
+
 int	main( void )
 {
 	Fixed		a;

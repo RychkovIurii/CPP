@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 08:58:06 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/02 12:50:37 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/03 10:42:04 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,8 @@ bool Fixed :: operator!=( const Fixed &obj ) const {
 
 Fixed Fixed :: operator+( const Fixed &obj ) {
 	Fixed result;
-	long long sum = static_cast<long long>(_fixed_point_value) + static_cast<long long>(obj.getRawBits());
+	long long sum = static_cast<long long>(_fixed_point_value)
+		+ static_cast<long long>(obj.getRawBits());
 
 	if ((sum > INT_MAX || sum < INT_MIN))
 	{
@@ -109,7 +110,8 @@ Fixed Fixed :: operator+( const Fixed &obj ) {
 
 Fixed Fixed :: operator-( const Fixed &obj ) {
 	Fixed result;
-	long long diff = static_cast<long long>(_fixed_point_value) - static_cast<long long>(obj.getRawBits());
+	long long diff = static_cast<long long>(_fixed_point_value)
+		- static_cast<long long>(obj.getRawBits());
 	if ((diff > INT_MAX || diff < INT_MIN))
 	{
 		std::cerr << "Error: overflow" << std::endl;
@@ -121,7 +123,8 @@ Fixed Fixed :: operator-( const Fixed &obj ) {
 
 Fixed Fixed :: operator*( const Fixed &obj ) {
 	Fixed result;
-	long long product = (static_cast<long long>(_fixed_point_value) * static_cast<long long>(obj.getRawBits()));
+	long long product = (static_cast<long long>(_fixed_point_value)
+		* static_cast<long long>(obj.getRawBits()));
 	product = product >> _fractional_bits;
 	if ((product > INT_MAX || product < INT_MIN))
 	{
@@ -140,7 +143,8 @@ Fixed Fixed :: operator/( const Fixed &obj ) {
 		std::cerr << "Error: division by zero" << std::endl;
 		std::exit(1);
 	}
-	long long quotient = (static_cast<long long>(_fixed_point_value << _fractional_bits) / static_cast<long long>(second_raw));
+	long long quotient = (static_cast<long long>(_fixed_point_value << _fractional_bits)
+		/ static_cast<long long>(second_raw));
 	if ((quotient > INT_MAX || quotient < INT_MIN))
 	{
 		std::cerr << "Error: overflow" << std::endl;
