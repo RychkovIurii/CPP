@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:23:14 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/02 15:46:48 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/03 10:14:51 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,18 @@
 
 int	main( void ) {
 	// Define the vertices of the triangle
-	Point a(Fixed(0), Fixed(0));   // Vertex A
-	Point b(Fixed(10), Fixed(0));  // Vertex B
-	Point c(Fixed(5), Fixed(10));  // Vertex C
+	Point a(0.0f, 0.0f);   // Vertex A
+	Point b(10.0f, 0.0f);  // Vertex B
+	Point c(5.0f, 10.0f);  // Vertex C
 
 	// Define test points
-	Point p1(Fixed(5), Fixed(5));   // Inside the triangle
-	Point p2(Fixed(0), Fixed(0));   // On vertex A
-	Point p3(Fixed(10), Fixed(0));  // On vertex B
-	Point p4(Fixed(5), Fixed(10));  // On vertex C
-	Point p5(Fixed(7), Fixed(5));   // Inside the triangle
-	Point p6(Fixed(10), Fixed(5));  // Outside the triangle
+	Point p1(5.0f, 5.0f);   // Inside the triangle
+	Point p2(0.0f, 0.0f);   // On vertex A
+	Point p3(10.0f, 0.0f);  // On vertex B
+	Point p4(5.0f, 10.0f);  // On vertex C
+	Point p5(7.0f, 5.0f);   // Inside the triangle
+	Point p6(10.0f, 5.0f);  // Outside the triangle
+	Point p7 = p6;          // Outside the triangle
 
 	// Run tests and print results
 	std::cout << "Point (5,5): ";
@@ -63,7 +64,11 @@ int	main( void ) {
 	else
 		std::cout << "Outside" << std::endl;
 
+	std::cout << "Copy of last Point (10,5): ";
+	if (bsp(a, b, c, p7))
+		std::cout << "Inside" << std::endl;
+	else
+		std::cout << "Outside" << std::endl;
+
 	return (0);
 }
-
-// Test copy constructor and assignment operator!

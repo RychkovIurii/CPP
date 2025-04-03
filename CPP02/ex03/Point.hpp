@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:26:03 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/02 15:47:17 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/03 10:11:10 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ class Point {
 		Fixed const y;
 	public:
 		Point( void );
-		Point( const Fixed x, const Fixed y );
+		Point( const float x, const float y );
 		Point( const Point &obj );
 		~Point( void );
-		Point &operator=( const Point &obj ) = delete; // Think about it
+		Point &operator=( const Point &obj ) = delete;
 		Fixed getX( void ) const;
 		Fixed getY( void ) const;
 };
