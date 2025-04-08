@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 15:56:07 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/08 10:54:17 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/08 13:56:37 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 class ClapTrap {
 
 	private:
-		std::string	_name;
-		int			_hit_points;
-		int			_energy_points;
-		int			_attack_damage;
+		std::string		_name;
+		unsigned int	_hit_points;
+		int				_energy_points;
+		int				_attack_damage;
 
 	public:
 		ClapTrap( void ) = delete;
