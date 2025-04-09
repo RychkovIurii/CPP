@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 15:56:02 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/09 15:39:16 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/09 17:41:37 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	basic_test( void )
 	pekka.beRepaired(1);			// Pekka repairs itself for 0. Now is max_hp
 }
 
-/*
+
 void	overflow_take_damage( void )
 {
 	DiamondTrap juho("Juho");
@@ -75,8 +75,8 @@ void	attack_test( void )		// Only attack and beRepaired cost 1 energy point
 		mika.attack("Pekka");	// Mika attacks only when has energy points
 		std::cout << "Counter is " << i + 1 << std::endl;
 	}
-	mika.highFivesGuys();
-} */
+	mika.whoAmI();
+}
 
 int	main ( void )
 {
@@ -85,12 +85,12 @@ int	main ( void )
 	
 	overflow_be_repaired();
 	std::cout << "Test overflow_be_repaired finished!\n" << std::endl;
-/*
+
 	overflow_take_damage();
 	std::cout << "Test overflow_take_damage finished!\n" << std::endl;
 
 	attack_test();
-	std::cout << "Test attack_test finished!\n" << std::endl; */
+	std::cout << "Test attack_test finished!\n" << std::endl;
 
 	return (0);
 }

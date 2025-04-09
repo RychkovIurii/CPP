@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 14:29:15 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/09 16:08:16 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/09 17:48:09 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 DiamondTrap :: DiamondTrap( std::string name ) : ClapTrap(name + "_clap_name"), ScavTrap(name), FragTrap(name)
 {
-	/* ScavTrap temp_scav("TempScav");
-	FragTrap temp_frag("TempFrag"); */
 	_name = name;
 	_hit_points = FragTrap :: _hit_points;
 	_energy_points = ScavTrap :: _energy_points;
@@ -55,5 +53,7 @@ DiamondTrap &DiamondTrap :: operator=( const DiamondTrap &obj )
 void DiamondTrap :: whoAmI( void )
 {
 	std::cout << _class_name << _name
-		<< " displays a positive high fives request." << std::endl;
+		<< " own name." << std::endl;
+	std::cout << _class_name << ClapTrap :: _name
+		<< " ClapTrap name." << std::endl;
 }
