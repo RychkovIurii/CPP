@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 14:05:34 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/09 15:28:59 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/10 12:02:36 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 
 class FragTrap : virtual public ClapTrap {
 	
+	private:
+		std::string	_name;
+
 	public:
 		FragTrap( void );
 		FragTrap( std::string name );

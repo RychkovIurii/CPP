@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:01:29 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/09 15:34:16 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/10 12:05:44 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,16 @@ ScavTrap &ScavTrap :: operator=( const ScavTrap &obj )
 	std::cout << _class_name << _name
 		<< " overloaded equal called." << std::endl;
 	return (*this);
+}
+
+void ScavTrap :: attack( const std::string& target )
+{
+	if (!_energy_points || !_hit_points)
+		return ;
+	_energy_points--;
+	std::cout << "Unique " << _class_name << _name << " attacks "
+		<< target << ", causing "<< _attack_damage
+		<< " points of damage!" << std::endl;
 }
 
 void ScavTrap :: guardGate( void )

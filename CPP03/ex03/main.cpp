@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 15:56:02 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/09 17:41:37 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/10 11:27:47 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,15 @@ void	attack_test( void )		// Only attack and beRepaired cost 1 energy point
 		mika.attack("Pekka");	// Mika attacks only when has energy points
 		std::cout << "Counter is " << i + 1 << std::endl;
 	}
-	mika.whoAmI();
+}
+
+void	extra_func_test( void )
+{
+	DiamondTrap juri("Juri");
+
+	juri.whoAmI();
+	juri.guardGate();
+	juri.highFivesGuys();
 }
 
 int	main ( void )
@@ -91,6 +99,9 @@ int	main ( void )
 
 	attack_test();
 	std::cout << "Test attack_test finished!\n" << std::endl;
+
+	extra_func_test();
+	std::cout << "Test extra_func_test finished!\n" << std::endl;
 
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/07 15:54:30 by irychkov          #+#    #+#              #
-#    Updated: 2025/04/09 15:13:45 by irychkov         ###   ########.fr        #
+#    Updated: 2025/04/10 12:11:22 by irychkov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = diamond_trap
 SRCS = main.cpp ClapTrap.cpp ScavTrap.cpp FragTrap.cpp DiamondTrap.cpp
 OBJ = $(SRCS:.cpp=.o)
 COMPILER = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++17
+CFLAGS = -Wall -Wextra -Werror -Wshadow -std=c++17
 
 all: $(NAME)
 

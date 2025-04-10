@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 14:29:15 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/09 17:48:09 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/10 12:05:08 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,11 @@ DiamondTrap &DiamondTrap :: operator=( const DiamondTrap &obj )
 
 void DiamondTrap :: whoAmI( void )
 {
-	std::cout << _class_name << _name
-		<< " own name." << std::endl;
-	std::cout << _class_name << ClapTrap :: _name
-		<< " ClapTrap name." << std::endl;
+	std::cout << "My name is " << _name << std::endl;
+	std::cout << "My ClapTrap name is " << ClapTrap ::_name << std::endl;
+}
+
+void DiamondTrap :: attack( const std::string& target )
+{
+	ScavTrap :: attack(target);
 }
