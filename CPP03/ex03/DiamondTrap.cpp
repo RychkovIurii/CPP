@@ -6,13 +6,14 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 14:29:15 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/10 12:05:08 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/10 12:17:48 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "DiamondTrap.hpp"
 
-DiamondTrap :: DiamondTrap( std::string name ) : ClapTrap(name + "_clap_name"), ScavTrap(name), FragTrap(name)
+DiamondTrap :: DiamondTrap( std::string name )
+	: ClapTrap(name + "_clap_name"), ScavTrap(name), FragTrap(name)
 {
 	_name = name;
 	_hit_points = FragTrap :: _hit_points;
