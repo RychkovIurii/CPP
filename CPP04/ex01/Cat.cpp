@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 12:31:31 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/15 12:29:52 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/15 15:58:55 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,14 @@
 Cat :: Cat( void )
 {
 	type = "Cat";
+	_brain = nullptr;
+	_brain = new Brain();
 	std::cout << "Constructor for Cat" << std::endl;
 }
 
 Cat :: ~Cat( void )
 {
+	delete _brain;
 	std::cout << "Destructor for Cat" << std::endl;
 }
 
