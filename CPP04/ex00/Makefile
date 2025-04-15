@@ -6,12 +6,12 @@
 #    By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/10 12:29:50 by irychkov          #+#    #+#              #
-#    Updated: 2025/04/10 12:30:40 by irychkov         ###   ########.fr        #
+#    Updated: 2025/04/15 14:04:21 by irychkov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = polymorphism
-SRCS = main.cpp Dog.cpp Cat.cpp Animal.cpp
+SRCS = main.cpp Dog.cpp Cat.cpp Animal.cpp WrongCat.cpp WrongAnimal.cpp
 OBJ = $(SRCS:.cpp=.o)
 COMPILER = c++
 CFLAGS = -Wall -Wextra -Werror -Wshadow -std=c++17
