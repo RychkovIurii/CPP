@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 12:31:23 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/15 15:56:15 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/15 18:19:34 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ Animal :: ~Animal( void )
 
 Animal :: Animal ( const Animal &obj )
 {
-	if (this != &obj)
-		*this = obj;
 	std::cout << "Copy constructor for Animal" << std::endl;
+	if (this != &obj)
+		this->type = obj.type;
 }
 
 Animal &Animal :: operator=(const Animal &obj)
 {
-	if (this != &obj)
-		*this = obj;
 	std::cout << "Copy assignment operator for Animal" << std::endl;
+	if (this != &obj)
+		this->type = obj.type;
 	return *this;
 }
 

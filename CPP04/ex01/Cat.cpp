@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 12:31:31 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/15 15:58:55 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/15 18:12:27 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,12 @@ Cat :: Cat ( const Cat &obj )
 Cat &Cat :: operator=(const Cat &obj)
 {
 	if (this != &obj)
-		*this = obj;
+	{
+		if (_brain)
+			delete _brain;
+		_brain = new Brain(*obj._brain);
+		type = obj.type;
+	}
 	std::cout << "Copy assignment operator for Cat" << std::endl;
 	return *this;
 }
@@ -44,4 +49,21 @@ Cat &Cat :: operator=(const Cat &obj)
 void Cat :: makeSound( void ) const
 {
 	std::cout << "MEOWWWWWWWWWWWWWWWWWWWwwwwwwwwwwww!" << std::endl;
+}
+
+void Cat :: setIdeas( std::string str ) const
+{
+	if (_brain)
+	{
+		for(int i = 0; i < 100; i++)
+		{
+			_brain->ideas[i] = str;
+		}
+	}
+}
+
+void Cat :: getIdea( void ) const
+{
+	if (_brain)
+		std::cout << _brain->ideas[0] << std::endl;
 }

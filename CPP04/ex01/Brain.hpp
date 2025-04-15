@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:32:51 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/15 16:17:45 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/15 17:44:09 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <iostream>
 
 class Brain {
+
 	public:
 		Brain( void );
 		~Brain( void );

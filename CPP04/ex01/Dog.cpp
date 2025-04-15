@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 12:31:38 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/15 15:59:27 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/15 17:54:09 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,21 @@ Dog &Dog :: operator=(const Dog &obj)
 void Dog :: makeSound( void ) const
 {
 	std::cout << "BARK BARK BARK!" << std::endl;
+}
+
+void Dog :: setIdeas( std::string str ) const
+{
+	if (_brain)
+	{
+		for(int i = 0; i < 100; i++)
+		{
+			_brain->ideas[i] = str;
+		}
+	}
+}
+
+void Dog :: getIdea( void ) const
+{
+	if (_brain)
+		std::cout << _brain->ideas[0] << std::endl;
 }
