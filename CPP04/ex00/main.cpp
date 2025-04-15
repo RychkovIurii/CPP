@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 12:31:59 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/15 14:34:20 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/15 18:14:26 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,3 +89,6 @@ int	main( void )
 		return (test1);
 	return (test2);
 }
+
+
+//TEST FOR BASIC OPERATIONS

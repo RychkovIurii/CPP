@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:48:35 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/15 14:40:02 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/15 18:25:53 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ WrongAnimal :: ~WrongAnimal( void )
 
 WrongAnimal :: WrongAnimal ( const WrongAnimal &obj )
 {
-	if (this != &obj)
-		*this = obj;
 	std::cout << "Copy constructor for WrongBASE" << std::endl;
+	if (this != &obj)
+		type = obj.type;
 }
 
 WrongAnimal &WrongAnimal :: operator=(const WrongAnimal &obj)
 {
-	if (this != &obj)
-		*this = obj;
 	std::cout << "Copy assignment operator for WrongBASE" << std::endl;
+	if (this != &obj)
+		type = obj.type;
 	return *this;
 }
 

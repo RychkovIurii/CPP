@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 12:31:31 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/15 12:29:52 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/15 18:26:06 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ Cat :: ~Cat( void )
 
 Cat :: Cat ( const Cat &obj )
 {
-	if (this != &obj)
-		*this = obj;
 	std::cout << "Copy constructor for Cat" << std::endl;
+	if (this != &obj)
+		type = obj.type;
 }
 
 Cat &Cat :: operator=(const Cat &obj)
 {
-	if (this != &obj)
-		*this = obj;
 	std::cout << "Copy assignment operator for Cat" << std::endl;
+	if (this != &obj)
+		type = obj.type;
 	return *this;
 }
 
