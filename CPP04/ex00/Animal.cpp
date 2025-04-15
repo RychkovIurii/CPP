@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 12:31:23 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/10 12:53:13 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/15 11:27:16 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,12 @@ Animal &Animal :: operator=(const Animal &obj)
 	return *this;
 }
 
-void Animal :: makeSound( void )
+void Animal :: makeSound( void ) const
 {
 	std::cout << "I'm an ANIMAL!" << std::endl;
+}
+
+std::string Animal :: getType( void ) const
+{
+	return (type);
 }
