@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 12:31:59 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/15 18:16:30 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/18 11:53:08 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main( void )
 		std::cout << "We finished basic animal test." << std::endl;
 		std::cout << std::endl;
 	}
-	/* {
+	{
 		const int amount = 4;
 		const Animal* array[amount] = {};
 		try {
@@ -52,7 +52,7 @@ int	main( void )
 			delete array[i];
 		}
 
-	} */
+	}
 	{
 		try {
 			const Cat cat_milk;
@@ -61,6 +61,7 @@ int	main( void )
 			cat_fish = cat_milk;
 			cat_fish.setIdeas("Fish");
 			cat_milk.getIdea();
+			cat_fish.getIdea();
 		} catch (const std::exception& e) {
 			std::cerr << "Exception: " << e.what() << std::endl;
 		}

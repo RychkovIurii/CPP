@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 12:31:31 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/15 18:12:27 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/18 11:46:23 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,31 @@
 
 Cat :: Cat( void )
 {
+	std::cout << "Constructor for Cat" << std::endl;
 	type = "Cat";
 	_brain = nullptr;
 	_brain = new Brain();
-	std::cout << "Constructor for Cat" << std::endl;
 }
 
 Cat :: ~Cat( void )
 {
-	delete _brain;
 	std::cout << "Destructor for Cat" << std::endl;
+	delete _brain;
 }
 
 Cat :: Cat ( const Cat &obj )
 {
-	if (this != &obj)
-		*this = obj;
 	std::cout << "Copy constructor for Cat" << std::endl;
+	if (this != &obj)
+	{
+		_brain = new Brain(*obj._brain);
+		type = obj.type;
+	}
 }
 
 Cat &Cat :: operator=(const Cat &obj)
 {
+	std::cout << "Copy assignment operator for Cat" << std::endl;
 	if (this != &obj)
 	{
 		if (_brain)
@@ -42,7 +46,6 @@ Cat &Cat :: operator=(const Cat &obj)
 		_brain = new Brain(*obj._brain);
 		type = obj.type;
 	}
-	std::cout << "Copy assignment operator for Cat" << std::endl;
 	return *this;
 }
 
@@ -53,6 +56,7 @@ void Cat :: makeSound( void ) const
 
 void Cat :: setIdeas( std::string str ) const
 {
+	std::cout << "We set idea " << str << " for Cat" << std::endl;
 	if (_brain)
 	{
 		for(int i = 0; i < 100; i++)
@@ -64,6 +68,7 @@ void Cat :: setIdeas( std::string str ) const
 
 void Cat :: getIdea( void ) const
 {
+	std::cout << "We get idea for Cat" << std::endl;
 	if (_brain)
 		std::cout << _brain->ideas[0] << std::endl;
 }
