@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 12:20:59 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/18 13:58:00 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:42:58 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ AMateria :: AMateria ( const AMateria &obj )
 
 AMateria &AMateria :: operator=(const AMateria &obj)
 {
-	std::cout << "Copy assignment operator for AMateria" << std::endl;
+	std::cout << "Copy assignment operator for AMateria" << std::endl; // While assigning a Materia to another, copying the type doesn’t make sense.
 	if (this != &obj)
 		_type = obj._type;
 	return *this;
@@ -53,5 +53,3 @@ void AMateria :: use( ICharacter& target )
 {
 	std::cout << "U CALL use FOR BASE AMATERIA" << std::endl;
 }
-
-

@@ -1,34 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   AMateria.hpp                                       :+:      :+:    :+:   */
+/*   Cure.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/18 12:20:51 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/18 16:53:18 by irychkov         ###   ########.fr       */
+/*   Created: 2025/04/18 16:33:06 by irychkov          #+#    #+#             */
+/*   Updated: 2025/04/18 16:49:20 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
+#include "AMateria.hpp"
 
-#include <iostream>
-#include <string>
-#include "ICharacter.hpp"
-
-class AMateria {
-
-	protected:
-		std::string _type;
+class Cure : public AMateria {
 
 	public:
-		AMateria( void );
-		virtual ~AMateria( void );
-		AMateria( const AMateria &obj );
-		AMateria &operator=(const AMateria &obj);
-
-		AMateria( std::string const & type );
-		std::string const & getType() const;
-		virtual AMateria* clone() const = 0;
-		virtual void use(ICharacter& target);
+		Cure( void );
+		~Cure( void );
+		Cure( const Cure &obj );
+		Cure &operator=(const Cure &obj);
+		void use(ICharacter& target) override;
+		Ice* clone() const override;
 };
