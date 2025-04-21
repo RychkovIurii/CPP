@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:52:51 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/21 11:46:02 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/21 13:59:03 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ class Character : public ICharacter
 		AMateria *_inventory[4];
 		AMateria *_droppedMaterials[4];
 		int _droppedCount;
+		void addDroppedMateria(AMateria* m);
+
 	public:
 		Character( void );
 		virtual ~Character( void );
@@ -33,5 +35,5 @@ class Character : public ICharacter
 		virtual void unequip(int idx);
 		virtual void use(int idx, ICharacter& target);
 
-		void listDroppedMaterials();
+		void listDroppedMaterias();
 };

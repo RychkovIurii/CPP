@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 12:31:59 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/21 12:03:23 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/21 13:59:20 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ int	main( void )
 	character.unequip(1);
 	character.unequip(2);
 
-	character.listDroppedMaterials();
+	character.listDroppedMaterias();
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:20:16 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/21 12:00:05 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/21 13:59:11 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,26 @@ void Character :: equip(AMateria* m)
 	std::cout << "Inventory is full, cannot equip " << m->getType() << std::endl;
 }
 
+void Character::addDroppedMateria(AMateria* m)
+{
+	if (!m)
+		return ;
+
+	if (_droppedCount < 4)
+	{
+		_droppedMaterials[_droppedCount++] = m;
+		std::cout << "Material unequipped, left on the ground: " << m->getType() << std::endl;
+	}
+	else
+	{
+		delete _droppedMaterials[0];
+		for (int i = 1; i < 4; ++i)
+			_droppedMaterials[i - 1] = _droppedMaterials[i];
+		_droppedMaterials[3] = m;
+		std::cout << "Dropped materials are full. Replaced the oldest material: " << m->getType() << std::endl;
+	}
+}
+
 void Character::unequip(int idx)
 {
 	if (idx < 0 || idx > 3)
@@ -131,19 +151,7 @@ void Character::unequip(int idx)
 	}
 	AMateria* tmp = _inventory[idx];
 	_inventory[idx] = nullptr;
-	if (_droppedCount < 4)
-	{
-		_droppedMaterials[_droppedCount++] = tmp;
-		std::cout << "Material unequipped, left on the ground: " << tmp->getType() << std::endl;
-	}
-	else
-	{
-		delete _droppedMaterials[0];
-		for (int i = 1; i < 4; ++i)
-			_droppedMaterials[i - 1] = _droppedMaterials[i];
-		_droppedMaterials[3] = tmp;
-		std::cout << "Dropped materials are full. Replaced the oldest material: " << tmp->getType() << std::endl;
-	}
+	addDroppedMateria(tmp);
 	std::cout << "Slot " << idx << " is now empty" << std::endl;
 }
 
@@ -162,7 +170,7 @@ void Character::use(int idx, ICharacter& target)
 	_inventory[idx]->use(target);
 }
 
-void Character::listDroppedMaterials()
+void Character::listDroppedMaterias()
 {
 	std::cout << "Dropped materials:" << std::endl;
 	for (int i = 0; i < _droppedCount; i++)
