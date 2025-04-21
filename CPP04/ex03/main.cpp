@@ -6,19 +6,28 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 12:31:59 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/18 16:54:40 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/21 12:03:23 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Ice.hpp"
 #include "Cure.hpp"
+#include "Character.hpp"
 #include <exception>
 
 int	main( void )
 {
-	Ice ice;
-	ice.use();
-	Cure cure;
-	cure.use();
+	Character character("Player");
+	AMateria* ice = new Ice();
+	AMateria* cure = new Cure();
+
+	character.equip(ice);
+	character.equip(cure);
+
+	character.unequip(0);
+	character.unequip(1);
+	character.unequip(2);
+
+	character.listDroppedMaterials();
 	return (0);
 }

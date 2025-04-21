@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 12:20:51 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/18 16:53:18 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/21 12:23:14 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include <iostream>
 #include <string>
 #include "ICharacter.hpp"
+
+class ICharacter;
 
 class AMateria {
 
