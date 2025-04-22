@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:33:15 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/21 10:50:26 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/22 12:50:45 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,6 @@ Ice :: Ice ( const Ice &obj )
 		_type = obj._type;
 }
 
-Ice &Ice :: operator=(const Ice &obj)
-{
-	std::cout << "Copy assignment operator for Ice" << std::endl;
-	if (this != &obj)
-		AMateria::operator=(obj);
-	return *this;
-}
 
 void Ice :: use( ICharacter& target )
 {

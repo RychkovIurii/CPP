@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 12:20:51 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/21 12:23:14 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/22 12:12:43 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ class AMateria {
 		AMateria( void );
 		virtual ~AMateria( void );
 		AMateria( const AMateria &obj );
-		AMateria &operator=(const AMateria &obj);
+		AMateria &operator=(const AMateria &obj) = delete;
 
 		AMateria( std::string const & type );
 		std::string const & getType() const;
