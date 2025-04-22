@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 12:31:59 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/22 11:46:23 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/22 12:10:15 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,14 @@ static int test_subject( void )
 
 		me = new Character("me");
 		tmp = src->createMateria("ice");
+		me->equip(tmp);
 		std::cout << std::endl;
 
-		me->equip(tmp);
 		tmp = src->createMateria("cure");
+		me->equip(tmp);
+		std::cout << std::endl;
+
+		tmp = src->createMateria("unknown");
 		me->equip(tmp);
 		std::cout << std::endl;
 
@@ -124,18 +128,21 @@ int	main( void )
 		return (1);
 	}
 	std::cout << "Test test_basic passed" << std::endl;
+	std::cout << std::endl;
 	if (test_equip_max())
 	{
 		std::cout << "Test test_equip_max failed" << std::endl;
 		return (1);
 	}
 	std::cout << "Test test_equip_max passed" << std::endl;
+	std::cout << std::endl;
 	if (test_subject())
 	{
 		std::cout << "Test test_subject failed" << std::endl;
 		return (1);
 	}
 	std::cout << "Test test_subject passed" << std::endl;
+	std::cout << std::endl;
 	std::cout << "All tests passed" << std::endl;
 	return (0);
 }
