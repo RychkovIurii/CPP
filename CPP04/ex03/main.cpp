@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 12:31:59 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/22 11:34:56 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/22 11:46:23 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,17 @@ static int test_basic( void )
 	int result;
 
 	std::cout << "=============== Test basic ===============" << std::endl;
-	AMateria* ice = nullptr;
-	AMateria* cure = nullptr;
 	AMateria* empty = nullptr;
 	result = 0;
 	try {
 		Character character("Player");
-		ice = new Ice();
-		cure = new Cure();
 		std::cout << std::endl;
 
 		character.equip(empty);
 		std::cout << std::endl;
 
-		character.equip(ice);
-		character.equip(cure);
+		character.equip(new Ice());
+		character.equip(new Cure());
 		character.equip(new Ice());
 		std::cout << std::endl;
 
