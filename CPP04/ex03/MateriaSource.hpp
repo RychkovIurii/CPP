@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   IMateriaSource.hpp                                 :+:      :+:    :+:   */
+/*   MateriaSource.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/18 16:09:47 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/22 10:58:08 by irychkov         ###   ########.fr       */
+/*   Created: 2025/04/22 10:05:35 by irychkov          #+#    #+#             */
+/*   Updated: 2025/04/22 10:53:08 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
-#include "AMateria.hpp"
+#include "IMateriaSource.hpp"
 
-class IMateriaSource
+class MateriaSource : public IMateriaSource
 {
+	private:
+		AMateria *_materias[4];
+		int _materiaCount;
+
 	public:
-		IMateriaSource( void ) = default;
-		IMateriaSource( const IMateriaSource &obj ) = default;
-		IMateriaSource &operator=( const IMateriaSource &obj ) = default;
-		virtual ~IMateriaSource( void ) = default;
-		virtual void learnMateria( AMateria* ) = 0;
-		virtual AMateria* createMateria( std::string const & type ) = 0;
+		MateriaSource( void );
+		MateriaSource( const MateriaSource &obj );
+		MateriaSource &operator=(const MateriaSource &obj);
+		virtual ~MateriaSource();
+
+		virtual void learnMateria(AMateria *m);
+		virtual AMateria *createMateria(std::string const &type);
 };

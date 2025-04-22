@@ -6,14 +6,14 @@
 #    By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/10 12:29:50 by irychkov          #+#    #+#              #
-#    Updated: 2025/04/21 12:21:45 by irychkov         ###   ########.fr        #
+#    Updated: 2025/04/22 10:22:31 by irychkov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = interfaces
 
 SRCS = main.cpp AMateria.cpp Ice.cpp Cure.cpp \
-		IMateriaSource.cpp Character.cpp
+		MateriaSource.cpp Character.cpp
 OBJ = $(SRCS:.cpp=.o)
 COMPILER = c++
 CFLAGS = -Wall -Wextra -Werror -Wshadow -std=c++17
