@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 12:31:59 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/22 12:10:15 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/22 13:01:07 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ static int test_basic( void )
 	result = 0;
 	try {
 		Character character("Player");
-		std::cout << std::endl;
-
 		character.equip(empty);
 		std::cout << std::endl;
 

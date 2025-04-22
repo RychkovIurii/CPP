@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:20:16 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/22 11:28:22 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/22 12:55:52 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,7 @@ std::string const &Character :: getName( void ) const
 void Character :: equip(AMateria* m)
 {
 	if(!m)
-	{
-		std::cout << "Cannot equip a null pointer" << std::endl;
 		return ;
-	}
 	for (int i = 0; i < 4; i++)
 	{
 		if (_inventory[i] == nullptr)
@@ -114,7 +111,6 @@ void Character :: equip(AMateria* m)
 			return ;
 		}
 	}
-	std::cout << "Inventory is full, cannot equip " << m->getType() << std::endl;
 }
 
 void Character::addDroppedMateria(AMateria* m)
@@ -140,15 +136,9 @@ void Character::addDroppedMateria(AMateria* m)
 void Character::unequip(int idx)
 {
 	if (idx < 0 || idx > 3)
-	{
-		std::cout << "Invalid index" << std::endl;
 		return ;
-	}
 	if (_inventory[idx] == nullptr)
-	{
-		std::cout << "No materia to unequip in slot " << idx << std::endl;
 		return ;
-	}
 	AMateria* tmp = _inventory[idx];
 	_inventory[idx] = nullptr;
 	addDroppedMateria(tmp);
@@ -158,15 +148,9 @@ void Character::unequip(int idx)
 void Character::use(int idx, ICharacter& target)
 {
 	if (idx < 0 || idx > 3)
-	{
-		std::cout << "Invalid index" << std::endl;
 		return ;
-	}
 	if (_inventory[idx] == nullptr)
-	{
-		std::cout << "No materia to use in slot " << idx << std::endl;
 		return ;
-	}
 	_inventory[idx]->use(target);
 }
 
