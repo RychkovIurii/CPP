@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:37:16 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/22 18:04:30 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/24 10:50:59 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,13 @@ const char *Form :: GradeTooLowException :: what() const throw()
 
 std::ostream &operator<<( std::ostream &out, Form const &obj )
 {
-	if (!getIsSigned(obj))
+	if (!obj.getIsSigned())
 		out << "Form: " << obj.getName() << ", sign grade: " << obj.getSignGrade()
 			<< ", execute grade: " << obj.getExecuteGrade() << ", is signed: "
-			<< "no";
+			<< "no.";
 	else
 		out << "Form: " << obj.getName() << ", sign grade: " << obj.getSignGrade()
 			<< ", execute grade: " << obj.getExecuteGrade() << ", is signed: "
-			<< "yes";
+			<< "yes.";
 	return out;
 }
