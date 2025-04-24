@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:24:43 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/24 12:48:42 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/24 12:58:55 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,42 @@ static void test_bureaucrat_sign_twice( void )
 	return;
 }
 
+static void test_sign_form_high_sign( void )
+{
+	try
+	{
+		Form form("A1", 1, 10);
+		std::cout << form << std::endl;
+		Bureaucrat bureaucrat("Leo", 5);
+		std::cout << bureaucrat << std::endl;
+		bureaucrat.signForm(form);
+		std::cout << form << std::endl;
+	}
+	catch (std::exception &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+	return;
+}
+
+static void test_sign_form_high_exec( void )
+{
+	try
+	{
+		Form form("A1", 10, 1);
+		std::cout << form << std::endl;
+		Bureaucrat bureaucrat("Leo", 5);
+		std::cout << bureaucrat << std::endl;
+		bureaucrat.signForm(form);
+		std::cout << form << std::endl;
+	}
+	catch (std::exception &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+	return;
+}
+
 static void test_bureaucrat_valid( void )
 {
 	try
@@ -231,13 +267,19 @@ int main( void )
 	std::cout << "=======Test bureaucrat signed twice=============================" << std::endl;
 	test_bureaucrat_sign_twice();
 	std::cout << std::endl;
+	std::cout << "=======Test bureaucrat sign form high sign======================" << std::endl;
+	test_sign_form_high_sign();
+	std::cout << std::endl;
+	std::cout << "=======Test bureaucrat sign form high exec======================" << std::endl;
+	test_sign_form_high_exec();
+	std::cout << std::endl;
 	std::cout << "=======Test bureaucrat valid====================================" << std::endl;
 	test_bureaucrat_valid();
 	std::cout << std::endl;
 	std::cout << "=======Test bureaucrat's grade equal form's values =============" << std::endl;
 	test_bureaucrat_equal();
 	std::cout << std::endl;
-	std::cout << "=======Test bureaucrat signForm====================================" << std::endl;
+	std::cout << "=======Test bureaucrat signForm==================================" << std::endl;
 	test_bureaucrat_sign_form();
 	std::cout << std::endl;
 

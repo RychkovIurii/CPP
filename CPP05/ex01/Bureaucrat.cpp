@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:24:52 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/24 12:40:48 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/24 12:51:15 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void Bureaucrat :: signForm( Form &form )
 		form.beSigned(*this);
 	} catch (std::exception &e) {
 		std::cout << _name << " cannot sign " << form.getName()
-			<< " because it is " << e.what() << std::endl;
+			<< " because " << e.what() << std::endl;
 		return;
 	}
 	std::cout << _name << " signed " << form.getName() << std::endl;
