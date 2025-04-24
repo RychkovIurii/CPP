@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:24:43 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/24 10:55:57 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/24 12:48:42 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void test_low_sign_grade( void )
 {
 	try
 	{
-		Form("A1", 200, 2);
+		Form form("A1", 200, 2);
 		std::cout << "We are here" << std::endl;
 	}
 	catch (std::exception &e)
@@ -30,7 +30,7 @@ static void test_high_sign_grade( void )
 {
 	try
 	{
-		Form("A1", -5, 2);
+		Form form("A1", -5, 2);
 		std::cout << "We are here" << std::endl;
 	}
 	catch (std::exception &e)
@@ -44,7 +44,7 @@ static void test_low_execute_grade( void )
 {
 	try
 	{
-		Form("A1", 2, 200);
+		Form form("A1", 2, 200);
 		std::cout << "We are here" << std::endl;
 	}
 	catch (std::exception &e)
@@ -58,7 +58,7 @@ static void test_high_execute_grade( void )
 {
 	try
 	{
-		Form("A1", 2, 0);
+		Form form("A1", 2, 0);
 		std::cout << "We are here" << std::endl;
 	}
 	catch (std::exception &e)
@@ -83,13 +83,124 @@ static void test_valid( void )
 	return;
 }
 
-static void test_bureaucrat_low_both( void );
-static void test_bureaucrat_high_both( void );
-static void test_bureaucrat_low_sign( void );
-static void test_bureaucrat_high_sign( void );
-static void test_bureaucrat_low_execute( void );
-static void test_bureaucrat_high_execute( void );
-static void test_bureaucrat_valid( void );
+static void test_bureaucrat_high_both( void )
+{
+	try
+	{
+		Form form("A1", 1, 1);
+		Bureaucrat bureaucrat("Leo", 5);
+		form.beSigned(bureaucrat);
+		std::cout << "We are here" << std::endl;
+	}
+	catch (std::exception &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+	return;
+}
+
+static void test_bureaucrat_high_sign( void )
+{
+	try
+	{
+		Form form("A1", 1, 10);
+		Bureaucrat bureaucrat("Leo", 5);
+		form.beSigned(bureaucrat);
+		std::cout << "We are here" << std::endl;
+	}
+	catch (std::exception &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+	return;
+}
+
+
+static void test_bureaucrat_high_execute( void )
+{
+	try
+	{
+		Form form("A1", 10, 1);
+		Bureaucrat bureaucrat("Leo", 5);
+		form.beSigned(bureaucrat);
+		std::cout << "We are here" << std::endl;
+	}
+	catch (std::exception &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+	return;
+}
+
+static void test_bureaucrat_sign_twice( void )
+{
+	try
+	{
+		Form form("A1", 10, 10);
+		Bureaucrat bureaucrat("Leo", 5);
+		std::cout << bureaucrat << std::endl;
+		bureaucrat.signForm(form);
+		bureaucrat.signForm(form);
+		std::cout << form << std::endl;
+	}
+	catch (std::exception &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+	return;
+}
+
+static void test_bureaucrat_valid( void )
+{
+	try
+	{
+		Form form("A1", 10, 10);
+		Bureaucrat bureaucrat("Leo", 5);
+		std::cout << bureaucrat << std::endl;
+		bureaucrat.signForm(form);
+		std::cout << form << std::endl;
+	}
+	catch (std::exception &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+	return;
+}
+
+static void test_bureaucrat_equal( void )
+{
+	try
+	{
+		Form form("A1", 5, 5);
+		Bureaucrat bureaucrat("Leo", 5);
+		std::cout << bureaucrat << std::endl;
+		bureaucrat.signForm(form);
+		std::cout << form << std::endl;
+	}
+	catch (std::exception &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+	return;
+}
+
+static void test_bureaucrat_sign_form( void )
+{
+	try
+	{
+		Form form("A1", 10, 10);
+		std::cout << form << std::endl;
+		Bureaucrat bureaucrat("Leo", 5);
+		std::cout << bureaucrat << std::endl;
+		bureaucrat.signForm(form);
+		std::cout << form << std::endl;
+	}
+	catch (std::exception &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+	return;
+}
 
 int main( void )
 {
@@ -105,8 +216,29 @@ int main( void )
 	std::cout << "====================Test high executeGrade======================" << std::endl;
 	test_high_execute_grade();
 	std::cout << std::endl;
-	std::cout << "====================Test valid==================================" << std::endl;
+	std::cout << "====================Test valid form=============================" << std::endl;
 	test_valid();
+	std::cout << std::endl;
+	std::cout << "=======Test bureaucrat's grade too low for exec and sign========" << std::endl;
+	test_bureaucrat_high_both();
+	std::cout << std::endl;
+	std::cout << "=======Test bureaucrat's grade too low for sign=================" << std::endl;
+	test_bureaucrat_high_sign();
+	std::cout << std::endl;
+	std::cout << "=======Test bureaucrat's grade too low for exec=================" << std::endl;
+	test_bureaucrat_high_execute();
+	std::cout << std::endl;
+	std::cout << "=======Test bureaucrat signed twice=============================" << std::endl;
+	test_bureaucrat_sign_twice();
+	std::cout << std::endl;
+	std::cout << "=======Test bureaucrat valid====================================" << std::endl;
+	test_bureaucrat_valid();
+	std::cout << std::endl;
+	std::cout << "=======Test bureaucrat's grade equal form's values =============" << std::endl;
+	test_bureaucrat_equal();
+	std::cout << std::endl;
+	std::cout << "=======Test bureaucrat signForm====================================" << std::endl;
+	test_bureaucrat_sign_form();
 	std::cout << std::endl;
 
 	return (0);

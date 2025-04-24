@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:37:12 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/22 18:05:26 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/24 12:37:02 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ class Form
 				const char *what() const throw();
 		};
 		class GradeTooLowException : public std::exception
+		{
+			public:
+				const char *what() const throw();
+		};
+		class AlreadySigned : public std::exception
 		{
 			public:
 				const char *what() const throw();

@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:24:52 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/22 15:09:52 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/24 12:40:48 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 Bureaucrat::Bureaucrat( std::string name, int grade ) : _name(name)
 {
-	std::cout << "Constructor called for Bureaucrat " << _name << std::endl;
 	_grade = grade;
 	if (_grade < _highestGrade)
 		throw Bureaucrat::GradeTooHighException();
@@ -22,10 +21,7 @@ Bureaucrat::Bureaucrat( std::string name, int grade ) : _name(name)
 		throw Bureaucrat::GradeTooLowException();
 }
 
-Bureaucrat :: ~Bureaucrat( void )
-{
-	std::cout << "Destructor called for Bureaucrat " << _name << std::endl;
-}
+Bureaucrat :: ~Bureaucrat( void ) { }
 
 Bureaucrat :: Bureaucrat( Bureaucrat const &obj )
 {
@@ -65,6 +61,18 @@ void Bureaucrat :: decreaseGrade( void )
 	if (_grade >= _lowestGrade)
 		throw Bureaucrat::GradeTooLowException();
 	_grade++;
+}
+
+void Bureaucrat :: signForm( Form &form )
+{
+	try {
+		form.beSigned(*this);
+	} catch (std::exception &e) {
+		std::cout << _name << " cannot sign " << form.getName()
+			<< " because it is " << e.what() << std::endl;
+		return;
+	}
+	std::cout << _name << " signed " << form.getName() << std::endl;
 }
 
 const char *Bureaucrat::GradeTooHighException::what() const throw()
