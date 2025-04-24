@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:24:48 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/24 14:32:13 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/24 15:32:27 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ class Bureaucrat
 		int getGrade( void ) const;
 		void increaseGrade( void );
 		void decreaseGrade( void );
-		void signAForm( AForm &form );
+		void signForm( AForm &form );
 		void executeForm( AForm const &form );
 };
 

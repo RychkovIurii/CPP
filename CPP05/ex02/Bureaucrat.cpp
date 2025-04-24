@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:24:52 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/24 14:31:22 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/24 15:32:22 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void Bureaucrat :: decreaseGrade( void )
 	_grade++;
 }
 
-void Bureaucrat :: signAForm( AForm &form )
+void Bureaucrat :: signForm( AForm &form )
 {
 	try {
 		form.beSigned(*this);

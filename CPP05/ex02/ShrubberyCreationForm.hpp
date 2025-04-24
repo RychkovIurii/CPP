@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 13:48:21 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/24 14:42:41 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/24 15:39:25 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ class ShrubberyCreationForm : public AForm
 {
 	private:
 		std::string _target;
+		class FileError : public std::exception
+		{
+			public:
+				const char *what() const throw();
+		};
 
 	public:
 		ShrubberyCreationForm( void ) = delete;

@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:06:13 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/24 15:09:35 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/24 15:44:30 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void RobotomyRequestForm :: execute( Bureaucrat const &executor ) const
 	if (executor.getGrade() > _executeGrade)
 		throw AForm::GradeTooLowException();
 
-	std::cout << "Makes some drilling noises..." << std::endl;
 	std::cout << "\tMakes some drilling noises..." << std::endl;
 	std::cout << "\t\tMakes some drilling noises..." << std::endl;
+	std::cout << "\t\t\tMakes some drilling noises..." << std::endl;
 
 	static std::random_device rd;
 	static std::mt19937 gen(rd());
