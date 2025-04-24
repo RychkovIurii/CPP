@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:24:48 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/24 13:19:00 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:32:13 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ class Bureaucrat
 		void increaseGrade( void );
 		void decreaseGrade( void );
 		void signAForm( AForm &form );
+		void executeForm( AForm const &form );
 };
 
 std::ostream &operator<<( std::ostream &out, Bureaucrat const &obj );

@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 13:13:03 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/24 13:13:06 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:44:59 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,10 @@ int AForm :: getExecuteGrade( void ) const
 
 void AForm :: beSigned( Bureaucrat const &bureaucrat )
 {
-	if (bureaucrat.getGrade() > _signGrade)
-		throw AForm::GradeTooLowException();
-	if (bureaucrat.getGrade() > _executeGrade)
-		throw AForm::GradeTooLowException();
 	if (_isSigned)
 		throw AForm::AlreadySigned();
+	if (bureaucrat.getGrade() > _signGrade)
+		throw AForm::GradeTooLowException();
 	_isSigned = true;
 }
 
@@ -69,6 +67,11 @@ const char *AForm :: GradeTooLowException :: what() const throw()
 const char *AForm::AlreadySigned::what() const throw()
 {
 	return "Already signed";
+}
+
+const char *AForm::NeedToSign::what() const throw()
+{
+	return "Need to Sign first";
 }
 
 std::ostream &operator<<( std::ostream &out, AForm const &obj )

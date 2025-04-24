@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 13:13:41 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/24 13:24:17 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:38:08 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,11 @@ class AForm
 				const char *what() const throw();
 		};
 		class AlreadySigned : public std::exception
+		{
+			public:
+				const char *what() const throw();
+		};
+		class NeedToSign : public std::exception
 		{
 			public:
 				const char *what() const throw();

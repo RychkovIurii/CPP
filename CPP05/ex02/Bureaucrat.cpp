@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:24:52 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/24 13:18:52 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:31:22 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,18 @@ void Bureaucrat :: signAForm( AForm &form )
 		return;
 	}
 	std::cout << _name << " signed " << form.getName() << std::endl;
+}
+
+void Bureaucrat :: executeForm( AForm const &form )
+{
+	try {
+		form.execute(*this);
+	} catch (std::exception &e) {
+		std::cout << _name << " cannot execute " << form.getName()
+			<< " because " << e.what() << std::endl;
+		return;
+	}
+	std::cout << _name << " executed " << form.getName() << std::endl;
 }
 
 const char *Bureaucrat::GradeTooHighException::what() const throw()

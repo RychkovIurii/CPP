@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 13:48:21 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/24 14:24:29 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:42:41 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 class ShrubberyCreationForm : public AForm
 {
+	private:
+		std::string _target;
+
 	public:
 		ShrubberyCreationForm( void ) = delete;
 		ShrubberyCreationForm( std::string target);

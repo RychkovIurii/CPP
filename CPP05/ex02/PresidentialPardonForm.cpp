@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:07:32 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/24 14:18:45 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:43:06 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,14 @@
 PresidentialPardonForm :: PresidentialPardonForm( std::string target)
 	: AForm("PresidentialPardonForm", 25, 5)
 {
-	(void)target;
-	std::cout << "Informs that <target> has been pardoned by Zaphod Beeblebrox." << std::endl;
+	_target = target;
 }
 
 void PresidentialPardonForm :: execute( Bureaucrat const &executor ) const
 {
-	(void)executor;
+	if (!_isSigned)
+		throw AForm::NeedToSign();
+	if (executor.getGrade() > _executeGrade)
+		throw AForm::GradeTooLowException();
+	std::cout << _target << " has been pardoned by Zaphod Beeblebrox." << std::endl;
 }
