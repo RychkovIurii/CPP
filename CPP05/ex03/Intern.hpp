@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:24:24 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/24 18:00:15 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/24 18:29:12 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ class Intern {
 		AForm* getPresidential(std::string formTarget);
 		AForm* getError(std::string formTarget);
 		std::string forms[3];
-		AForm (Intern::*functions[4])( std::string formTarget );
-		/* class FormNotFound : public std::exception
+		AForm* (Intern::*functions[4])( std::string formTarget );
+		class FormNotFound : public std::exception
 		{
 			public:
 				const char *what() const throw();
-		}; */
+		};
 	public:
 		Intern( void );
 		~Intern( void ) = default;

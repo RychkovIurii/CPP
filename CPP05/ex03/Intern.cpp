@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:29:28 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/24 18:02:01 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/24 18:33:43 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ AForm* Intern :: getPresidential(std::string formTarget)
 AForm* Intern :: getError(std::string formTarget)
 {
 	(void)formTarget;
-	/* throw FormNotFound(); */
-	std::cout << "The Form doesn't exist" << std::endl;
-	return (nullptr);
+	std::cout << "The Form doesn't exist and we throw it" << std::endl;
+	throw FormNotFound();
+	/* return (nullptr); */
 }
 
 AForm* Intern :: makeForm( std::string formName, std::string formTarget)
@@ -60,8 +60,7 @@ AForm* Intern :: makeForm( std::string formName, std::string formTarget)
 	return (this->*functions[index])(formTarget);
 }
 
-/* const char *Intern::FormNotFound::what() const throw()
+const char *Intern::FormNotFound::what() const throw()
 {
 	return "The Form doesn't exist";
 }
- */
