@@ -6,12 +6,13 @@
 #    By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/22 14:24:06 by irychkov          #+#    #+#              #
-#    Updated: 2025/04/24 13:25:00 by irychkov         ###   ########.fr        #
+#    Updated: 2025/04/24 14:25:21 by irychkov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = bureaucrat
-SRCS = main.cpp Bureaucrat.cpp AForm.cpp
+NAME = 3forms
+SRCS = main.cpp Bureaucrat.cpp AForm.cpp RobotomyRequestForm.cpp \
+		PresidentialPardonForm.cpp ShrubberyCreationForm.cpp
 OBJ = $(SRCS:.cpp=.o)
 COMPILER = c++
 CFLAGS = -Wall -Wextra -Werror -Wshadow -std=c++17

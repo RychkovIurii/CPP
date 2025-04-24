@@ -6,11 +6,11 @@
 #    By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/22 14:24:06 by irychkov          #+#    #+#              #
-#    Updated: 2025/04/22 18:05:52 by irychkov         ###   ########.fr        #
+#    Updated: 2025/04/24 14:25:10 by irychkov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = bureaucrat
+NAME = form
 SRCS = main.cpp Bureaucrat.cpp Form.cpp
 OBJ = $(SRCS:.cpp=.o)
 COMPILER = c++
