@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:24:52 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/24 17:37:38 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/25 14:10:14 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,15 @@ Bureaucrat :: ~Bureaucrat( void ) { }
 
 Bureaucrat :: Bureaucrat( Bureaucrat const &obj )
 {
-	std::cout << "Copy constructor called for Bureaucrat " << obj._name << std::endl;
+	std::cout << "Copy constructor called for Bureaucrat "
+		<< obj._name << std::endl;
 	*this = obj;
 }
 
 Bureaucrat &Bureaucrat :: operator=( Bureaucrat const &obj )
 {
-	std::cout << "Copy assignment operator called for Bureaucrat " << obj._name << std::endl;
+	std::cout << "Copy assignment operator called for Bureaucrat "
+		<< obj._name << std::endl;
 	if (this != &obj)
 	{
 		this->_grade = obj._grade;
