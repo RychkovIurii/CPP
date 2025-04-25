@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:24:52 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/25 14:08:03 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/25 17:03:42 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,18 +67,6 @@ void Bureaucrat :: decreaseGrade( void )
 	if (_grade >= _lowestGrade)
 		throw Bureaucrat::GradeTooLowException();
 	_grade++;
-}
-
-void Bureaucrat :: beSigned( Form &form )
-{
-	try
-	{
-		form.beSigned(*this);
-	}
-	catch (std::exception &e)
-	{
-		std::cerr << e.what() << std::endl;
-	}
 }
 
 const char *Bureaucrat::GradeTooHighException::what() const throw()

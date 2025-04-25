@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:37:16 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/24 12:37:12 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/25 17:04:32 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void Form :: beSigned( Bureaucrat const &bureaucrat )
 {
 	if (bureaucrat.getGrade() > _signGrade)
 		throw Form::GradeTooLowException();
-	if (bureaucrat.getGrade() > _executeGrade)
+	if (bureaucrat.getGrade() > _executeGrade) //Check
 		throw Form::GradeTooLowException();
 	if (_isSigned)
 		throw Form::AlreadySigned();
