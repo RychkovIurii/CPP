@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 14:24:43 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/24 12:58:55 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/04/27 11:41:59 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ static void test_bureaucrat_high_execute( void )
 		Form form("A1", 10, 1);
 		Bureaucrat bureaucrat("Leo", 5);
 		form.beSigned(bureaucrat);
-		std::cout << "We are here" << std::endl;
+		std::cout << form << std::endl;
 	}
 	catch (std::exception &e)
 	{
