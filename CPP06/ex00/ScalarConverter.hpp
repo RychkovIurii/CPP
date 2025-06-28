@@ -6,19 +6,20 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 10:42:06 by irychkov          #+#    #+#             */
-/*   Updated: 2025/04/25 11:11:33 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/06/28 16:35:19 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 #include <iostream>
+#include <string>
 
 class ScalarConverter
 {
 	public:
-		ScalarConverter();
-		~ScalarConverter();
-		ScalarConverter(const ScalarConverter &other);
-		ScalarConverter &operator=(const ScalarConverter &other);
-		static void converter(const std::string &input);
+		ScalarConverter() = delete;
+		~ScalarConverter() = delete;
+		ScalarConverter(const ScalarConverter &other) = delete;
+		ScalarConverter &operator=(const ScalarConverter &other) = delete;
+		static void convert(const std::string &input);
 };
