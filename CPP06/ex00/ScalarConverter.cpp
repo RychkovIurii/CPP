@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 10:42:16 by irychkov          #+#    #+#             */
-/*   Updated: 2025/06/30 11:34:49 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/06/30 12:01:05 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,11 +127,18 @@ void ScalarConverter::convert(const std::string &input) {
 
 	double outputDouble;
 	try {
+		size_t pos = 0;
 		if (input.back() == 'f') {
 			outputDouble = std::stod(input.substr(0, input.length() - 1));
+			if (outputDouble < std::numeric_limits<float>::lowest() || outputDouble > std::numeric_limits<float>::max()) {
+				throw std::invalid_argument("Value out of range for float.");
+			}
 		}
 		else {
-			outputDouble = std::stod(input);
+			outputDouble = std::stod(input, &pos);
+			if (pos != input.length()) {
+				throw std::invalid_argument("We have leftover characters after conversion.");
+			}
 		}
 	} catch (const std::invalid_argument &e) {
 		printImpossible();
