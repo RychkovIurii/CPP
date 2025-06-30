@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 10:42:16 by irychkov          #+#    #+#             */
-/*   Updated: 2025/06/30 10:13:22 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/06/30 10:35:21 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,23 @@ static bool isValid(const std::string &input) {
 		}
 	}
 	return true; // If we passed all checks, it's valid
+}
+
+static int getPrecision(const std::string &input) {
+	size_t precision;
+	size_t dotPos = input.find('.');
+	if (dotPos == std::string::npos) {
+		return 1; // Default precision if no dot is found
+	}
+	size_t endPos = input.find('f', dotPos);
+	if (endPos == std::string::npos) {
+		endPos = input.length(); // If no 'f', consider the end of the string
+	}
+	precision = endPos - dotPos - 1; // Precision is the number of digits after the dot
+	if (precision > static_cast<size_t>(std::numeric_limits<int>::max()) || precision == 0) {
+		return 1; // Ensure at least one digit after the dot
+	}
+	return static_cast<int>(precision);
 }
 
 void ScalarConverter::convert(const std::string &input) {
@@ -82,7 +99,7 @@ void ScalarConverter::convert(const std::string &input) {
 		std::cout << "double: impossible" << std::endl;
 		return;
 	}
-	
+	int precision = getPrecision(input);
 	// Check if the input is a character
 	// If the input is a single character, we can convert it directly
 	// How can we split logic to handle 0 as a number and as a character?
@@ -90,7 +107,7 @@ void ScalarConverter::convert(const std::string &input) {
 		char c = input[0];
 		std::cout << "char: '" << c << "'" << std::endl;
 		std::cout << "int: " << static_cast<int>(c) << std::endl;
-		std::cout << "float: " << std::fixed << std::setprecision(1) << static_cast<float>(c) << "f" << std::endl;
+		std::cout << "float: " << std::fixed << std::setprecision(precision) << static_cast<float>(c) << "f" << std::endl;
 		std::cout << "double: " << static_cast<double>(c) << std::endl;
 		return;
 	}
@@ -100,7 +117,7 @@ void ScalarConverter::convert(const std::string &input) {
 		char c = input[1];
 		std::cout << "char: '" << c << "'" << std::endl;
 		std::cout << "int: " << static_cast<int>(c) << std::endl;
-		std::cout << "float: " << std::fixed << std::setprecision(1) << static_cast<float>(c) << "f" << std::endl;
+		std::cout << "float: " << std::fixed << std::setprecision(precision) << static_cast<float>(c) << "f" << std::endl;
 		std::cout << "double: " << static_cast<double>(c) << std::endl;
 		return;
 	}
@@ -133,10 +150,10 @@ void ScalarConverter::convert(const std::string &input) {
 		std::cout << "float: impossible" << std::endl;
 	} else {
 		outputFloat = static_cast<float>(outputDouble);
-		std::cout << "float: " << /* std::fixed << std::setprecision(1) << */ outputFloat << "f" << std::endl;
+		std::cout << "float: " << std::fixed << std::setprecision(precision) << outputFloat << "f" << std::endl;
 	}
 	
-	std::cout << "double: " /* << std::fixed << std::setprecision(1) */ << outputDouble << std::endl;
+	std::cout << "double: " << std::fixed << std::setprecision(precision) << outputDouble << std::endl;
 	
 	// Here we implement the logic to convert the input string to float and double
 }	
