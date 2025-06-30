@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 10:42:16 by irychkov          #+#    #+#             */
-/*   Updated: 2025/06/30 12:01:05 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/06/30 12:11:21 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void ScalarConverter::convert(const std::string &input) {
 				throw std::invalid_argument("We have leftover characters after conversion.");
 			}
 		}
-	} catch (const std::invalid_argument &e) {
+	} catch (const std::exception &e) {
 		printImpossible();
 		return;
 	}
