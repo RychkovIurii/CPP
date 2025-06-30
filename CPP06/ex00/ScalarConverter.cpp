@@ -6,13 +6,45 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 10:42:16 by irychkov          #+#    #+#             */
-/*   Updated: 2025/06/30 10:35:21 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/06/30 11:34:49 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
 #include <iomanip>
 #include <limits>
+
+static void printImpossible() {
+	std::cout << "char: impossible" << std::endl;
+	std::cout << "int: impossible" << std::endl;
+	std::cout << "float: impossible" << std::endl;
+	std::cout << "double: impossible" << std::endl;
+}
+
+static bool handlePseudoLiteral(const std::string &input) {
+	if (input == "nan" || input == "nanf") {
+		std::cout << "char: impossible" << std::endl;
+		std::cout << "int: impossible" << std::endl;
+		std::cout << "float: nanf" << std::endl;
+		std::cout << "double: nan" << std::endl;
+		return true;
+	}
+	if (input == "-inf" || input == "-inff") {
+		std::cout << "char: impossible" << std::endl;
+		std::cout << "int: impossible" << std::endl;
+		std::cout << "float: -inff" << std::endl;
+		std::cout << "double: -inf" << std::endl;
+		return true;
+	}
+	if (input == "+inf" || input == "+inff") {
+		std::cout << "char: impossible" << std::endl;
+		std::cout << "int: impossible" << std::endl;
+		std::cout << "float: +inff" << std::endl;
+		std::cout << "double: +inf" << std::endl;
+		return true;
+	}
+	return false;
+}
 
 static bool isValid(const std::string &input) {
 	if (input.length() == 3 && input.front() == '\'' && input.back() == '\'')
@@ -60,49 +92,20 @@ static int getPrecision(const std::string &input) {
 
 void ScalarConverter::convert(const std::string &input) {
 
-	if (input.empty()) { // Check for empty input and we can check for other invalid inputs
-		std::cout << "char: impossible" << std::endl;
-		std::cout << "int: impossible" << std::endl;
-		std::cout << "float: impossible" << std::endl;
-		std::cout << "double: impossible" << std::endl;
+	if (input.empty()) {
+		printImpossible();
 		return;
 	}
 
-	if (input == "nan" || input == "nanf") {
-		std::cout << "char: impossible" << std::endl;
-		std::cout << "int: impossible" << std::endl;
-		std::cout << "float: nanf" << std::endl;
-		std::cout << "double: nan" << std::endl;
+	if (handlePseudoLiteral(input))
 		return;
-	}
-	
-	if (input == "-inf" || input == "-inff") {
-		std::cout << "char: impossible" << std::endl;
-		std::cout << "int: impossible" << std::endl;
-		std::cout << "float: -inff" << std::endl;
-		std::cout << "double: -inf" << std::endl;
-		return;
-	}
-
-	if (input == "+inf" || input == "+inff") {
-		std::cout << "char: impossible" << std::endl;
-		std::cout << "int: impossible" << std::endl;
-		std::cout << "float: +inff" << std::endl;
-		std::cout << "double: +inf" << std::endl;
-		return;
-	}
 
 	if (!isValid(input)) {
-		std::cout << "char: impossible" << std::endl;
-		std::cout << "int: impossible" << std::endl;
-		std::cout << "float: impossible" << std::endl;
-		std::cout << "double: impossible" << std::endl;
+		printImpossible();
 		return;
 	}
+
 	int precision = getPrecision(input);
-	// Check if the input is a character
-	// If the input is a single character, we can convert it directly
-	// How can we split logic to handle 0 as a number and as a character?
 	if (input.length() == 1 && std::isprint(input[0]) && !std::isdigit(input[0])) {
 		char c = input[0];
 		std::cout << "char: '" << c << "'" << std::endl;
@@ -123,11 +126,16 @@ void ScalarConverter::convert(const std::string &input) {
 	}
 
 	double outputDouble;
-	if (input.back() == 'f') {
-		outputDouble = std::stod(input.substr(0, input.length() - 1));
-	}
-	else {
-		outputDouble = std::stod(input);
+	try {
+		if (input.back() == 'f') {
+			outputDouble = std::stod(input.substr(0, input.length() - 1));
+		}
+		else {
+			outputDouble = std::stod(input);
+		}
+	} catch (const std::invalid_argument &e) {
+		printImpossible();
+		return;
 	}
 
 	// Now we can convert the double to char and int
@@ -154,6 +162,4 @@ void ScalarConverter::convert(const std::string &input) {
 	}
 	
 	std::cout << "double: " << std::fixed << std::setprecision(precision) << outputDouble << std::endl;
-	
-	// Here we implement the logic to convert the input string to float and double
 }	
