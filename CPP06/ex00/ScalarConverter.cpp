@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 10:42:16 by irychkov          #+#    #+#             */
-/*   Updated: 2025/07/01 14:49:56 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:59:02 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,9 +162,10 @@ void	ScalarConverter::convert(const std::string &input) {
 	// Now we can convert the double to char, int, and float types safely
 	char outputChar;
 	if (outputDouble < std::numeric_limits<char>::min()
-		|| outputDouble > std::numeric_limits<char>::max()
-		|| !std::isprint(static_cast<char>(outputDouble))) {	
+		|| outputDouble > std::numeric_limits<char>::max()) {	
 		std::cout << "char: impossible" << std::endl;
+	} else if (!std::isprint(static_cast<char>(outputDouble))) {
+		std::cout << "char: Non displayable" << std::endl;
 	} else {
 		outputChar = static_cast<char>(outputDouble);
 		std::cout << "char: '" << outputChar << "'" << std::endl;
