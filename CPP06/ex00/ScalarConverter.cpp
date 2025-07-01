@@ -6,13 +6,14 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 10:42:16 by irychkov          #+#    #+#             */
-/*   Updated: 2025/06/30 12:11:21 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:10:33 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
 #include <iomanip>
 #include <limits>
+#include <cmath>
 
 static void printImpossible() {
 	std::cout << "char: impossible" << std::endl;
@@ -90,6 +91,29 @@ static int getPrecision(const std::string &input) {
 	return static_cast<int>(precision);
 }
 
+static bool handleCharLiteral(const std::string& input, int precision) {
+	char c;
+
+	// Case 1: single printable non-digit char
+	if (input.length() == 1 && std::isprint(input[0]) && !std::isdigit(input[0])) {
+		c = input[0];
+	} 
+	// Case 2: character literal in form of `'a'`
+	else if (input.length() == 3 && input.front() == '\'' && input.back() == '\'') {
+		c = input[1];
+	} 
+	else {
+		return false;
+	}
+
+	std::cout << "char: '" << c << "'" << std::endl;
+	std::cout << "int: " << static_cast<int>(c) << std::endl;
+	std::cout << "float: " << std::fixed << std::setprecision(precision)
+	          << static_cast<float>(c) << "f" << std::endl;
+	std::cout << "double: " << static_cast<double>(c) << std::endl;
+	return true;
+}
+
 void ScalarConverter::convert(const std::string &input) {
 
 	if (input.empty()) {
@@ -106,24 +130,8 @@ void ScalarConverter::convert(const std::string &input) {
 	}
 
 	int precision = getPrecision(input);
-	if (input.length() == 1 && std::isprint(input[0]) && !std::isdigit(input[0])) {
-		char c = input[0];
-		std::cout << "char: '" << c << "'" << std::endl;
-		std::cout << "int: " << static_cast<int>(c) << std::endl;
-		std::cout << "float: " << std::fixed << std::setprecision(precision) << static_cast<float>(c) << "f" << std::endl;
-		std::cout << "double: " << static_cast<double>(c) << std::endl;
+	if (handleCharLiteral(input, precision))
 		return;
-	}
-
-	if (input.length() == 3 && input.front() == '\'' && input.back() == '\'') {
-		std::cout << "Input is a character literal." << std::endl;
-		char c = input[1];
-		std::cout << "char: '" << c << "'" << std::endl;
-		std::cout << "int: " << static_cast<int>(c) << std::endl;
-		std::cout << "float: " << std::fixed << std::setprecision(precision) << static_cast<float>(c) << "f" << std::endl;
-		std::cout << "double: " << static_cast<double>(c) << std::endl;
-		return;
-	}
 
 	double outputDouble;
 	try {
@@ -165,7 +173,10 @@ void ScalarConverter::convert(const std::string &input) {
 		std::cout << "float: impossible" << std::endl;
 	} else {
 		outputFloat = static_cast<float>(outputDouble);
-		std::cout << "float: " << std::fixed << std::setprecision(precision) << outputFloat << "f" << std::endl;
+		if (std::isinf(outputFloat) || std::isnan(outputFloat))
+			std::cout << "float: impossible" << std::endl;
+		else
+			std::cout << "float: " << std::fixed << std::setprecision(precision) << outputFloat << "f" << std::endl;
 	}
 	
 	std::cout << "double: " << std::fixed << std::setprecision(precision) << outputDouble << std::endl;
