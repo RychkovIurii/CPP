@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:03:51 by irychkov          #+#    #+#             */
-/*   Updated: 2025/06/28 16:36:12 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:45:48 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,10 @@ int	main(int argc, char **argv)
 		return (0);
 	}
 
-	try
-	{
+	try {
 		ScalarConverter::convert(argv[1]);
 	}
-	catch (const std::exception &e)
-	{
+	catch (const std::exception &e) {
 		std::cerr << e.what() << std::endl;
 		return (1);
 	}
