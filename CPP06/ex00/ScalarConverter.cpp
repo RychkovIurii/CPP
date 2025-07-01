@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 10:42:16 by irychkov          #+#    #+#             */
-/*   Updated: 2025/07/01 14:10:33 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:24:13 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,28 @@ static bool handleCharLiteral(const std::string& input, int precision) {
 	return true;
 }
 
+static bool parseToDoubleFromInput(const std::string& input, double& outputDouble) {
+	try {
+		size_t pos = 0;
+		if (input.back() == 'f') {
+			outputDouble = std::stod(input.substr(0, input.length() - 1));
+			if (outputDouble < std::numeric_limits<float>::lowest() || outputDouble > std::numeric_limits<float>::max()) {
+				throw std::invalid_argument("Value out of range for float.");
+			}
+		}
+		else {
+			outputDouble = std::stod(input, &pos);
+			if (pos != input.length()) {
+				throw std::invalid_argument("We have leftover characters after conversion.");
+			}
+		}
+	} catch (const std::exception &e) {
+		printImpossible();
+		return false;
+	}
+	return true;
+}
+
 void ScalarConverter::convert(const std::string &input) {
 
 	if (input.empty()) {
@@ -134,26 +156,10 @@ void ScalarConverter::convert(const std::string &input) {
 		return;
 
 	double outputDouble;
-	try {
-		size_t pos = 0;
-		if (input.back() == 'f') {
-			outputDouble = std::stod(input.substr(0, input.length() - 1));
-			if (outputDouble < std::numeric_limits<float>::lowest() || outputDouble > std::numeric_limits<float>::max()) {
-				throw std::invalid_argument("Value out of range for float.");
-			}
-		}
-		else {
-			outputDouble = std::stod(input, &pos);
-			if (pos != input.length()) {
-				throw std::invalid_argument("We have leftover characters after conversion.");
-			}
-		}
-	} catch (const std::exception &e) {
-		printImpossible();
+	if (!parseToDoubleFromInput(input, outputDouble))
 		return;
-	}
 
-	// Now we can convert the double to char and int
+	// Now we can convert the double to char, int, and float types safely
 	char outputChar;
 	if (outputDouble < std::numeric_limits<char>::min() || outputDouble > std::numeric_limits<char>::max() || !std::isprint(static_cast<char>(outputDouble))) {	
 		std::cout << "char: impossible" << std::endl;
