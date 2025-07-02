@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 14:41:15 by irychkov          #+#    #+#             */
-/*   Updated: 2025/07/02 14:41:37 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/07/02 15:43:24 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,5 @@
 
 class C : public Base {
 	public:
-		virtual ~C() {}
+		virtual ~C() = default;
 };
