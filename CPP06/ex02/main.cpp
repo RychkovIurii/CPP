@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 14:34:58 by irychkov          #+#    #+#             */
-/*   Updated: 2025/07/02 15:39:30 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/07/02 15:51:46 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,22 @@ void identify(Base& p) {
 		A& a = dynamic_cast<A&>(p);
 		std::cout << "A" << std::endl;
 		(void)a;
+		return;
+	} catch (std::bad_cast&) { }
+	
+	try {
+		B& b = dynamic_cast<B&>(p);
+		std::cout << "B" << std::endl;
+		(void)b;
+		return;
+	} catch (std::bad_cast&) { }
+		
+	try {
+		C& c = dynamic_cast<C&>(p);
+		std::cout << "C" << std::endl;
+		(void)c;
 	} catch (std::bad_cast&) {
-		try {
-			B& b = dynamic_cast<B&>(p);
-			std::cout << "B" << std::endl;
-			(void)b;
-		} catch (std::bad_cast&) {
-			try {
-				C& c = dynamic_cast<C&>(p);
-				std::cout << "C" << std::endl;
-				(void)c;
-			} catch (std::bad_cast&) {
-				std::cout << "Unknown type" << std::endl;
-			}
-		}
+		std::cout << "Unknown type" << std::endl;
 	}
 }
 
