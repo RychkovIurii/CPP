@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 10:42:16 by irychkov          #+#    #+#             */
-/*   Updated: 2025/07/01 14:59:02 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/07/02 12:35:30 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ static bool	handlePseudoLiteral(const std::string &input) {
 }
 
 static bool	isValid(const std::string &input) {
+	if (input.length() == 1)
+		return (true);
 	if (input.length() == 3 && input.front() == '\''
 		&& input.back() == '\'')
 		return (true);
@@ -94,20 +96,28 @@ static int	getPrecision(const std::string &input) {
 static bool	handleCharLiteral(const std::string& input, int precision) {
 	char c;
 	// Case 1: single printable non-digit char
-	if (input.length() == 1 && std::isprint(input[0])
-		&& !std::isdigit(input[0])) {
+	if (input.length() == 1) {
 		c = input[0];
+		if (std::isprint(c) && !std::isdigit(c)) {
+			std::cout << "char: '" << c << "'" << std::endl;
+		} else {
+			std::cout << "char: Non displayable" << std::endl;
+		}
 	} 
 	// Case 2: character literal in form of `'a'`
 	else if (input.length() == 3 && input.front() == '\''
 		&& input.back() == '\'') {
 		c = input[1];
+		if (std::isprint(c) && !std::isdigit(c)) {
+			std::cout << "char: '" << c << "'" << std::endl;
+		} else {
+			std::cout << "char: Non displayable" << std::endl;
+		}
 	} 
 	else {
 		return (false);
 	}
 
-	std::cout << "char: '" << c << "'" << std::endl;
 	std::cout << "int: " << static_cast<int>(c) << std::endl;
 	std::cout << "float: " << std::fixed << std::setprecision(precision)
 	          << static_cast<float>(c) << "f" << std::endl;
