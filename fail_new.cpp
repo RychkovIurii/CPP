@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 13:49:17 by irychkov          #+#    #+#             */
-/*   Updated: 2025/03/20 16:46:48 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/07/04 14:40:11 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void* operator new(size_t size)
 		std::cerr << "Custom new: Allocation failed after " << fail_after << " allocations." << std::endl;
 		
 		// Throwing std::bad_alloc to simulate allocation failure
+		allocation_count = 0; // Reset count after failure
 		throw std::bad_alloc(); // Throws an exception on allocation failure
 	}
 	
