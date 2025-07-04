@@ -6,17 +6,20 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 11:42:56 by irychkov          #+#    #+#             */
-/*   Updated: 2025/07/04 13:59:26 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/07/04 14:31:31 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 #include "Array.hpp"
 #include <stdexcept>
+#include <iostream>
 
 template <class T>
 Array<T>::Array() : array(nullptr), length(0) {}
 
+//I cannot change the type to int to protect against negatives, because it would break the spec.
+// Undefined behavior if n is passed as a negative value and implicitly converted to unsigned.
 template <class T>
 Array<T>::Array(unsigned int n) : length(n) {
 	if (n > 0) {
