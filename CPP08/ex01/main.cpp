@@ -6,12 +6,13 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 10:24:30 by irychkov          #+#    #+#             */
-/*   Updated: 2025/07/05 11:10:48 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/07/05 11:17:16 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Span.hpp"
 #include <iostream>
+#include <ctime>
 
 int main() {
 	try {
@@ -25,6 +26,17 @@ int main() {
 
 		std::cout << "Shortest span: " << span.shortestSpan() << std::endl;
 		std::cout << "Longest span: " << span.longestSpan() << std::endl;
+
+		std::cout << "==== Large Span Example:" << std::endl;
+		std::srand(std::time(nullptr));
+		Span sp(10000);
+
+		for (int i = 0; i < 10000; ++i) {
+			sp.addNumber(std::rand());
+		}
+
+		std::cout << "Shortest span: " << sp.shortestSpan() << std::endl;
+		std::cout << "Longest span: " << sp.longestSpan() << std::endl;
 
 		std::cout << "==== Exception Handling Example:" << std::endl;
 		try {
