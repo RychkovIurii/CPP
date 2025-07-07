@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 10:24:30 by irychkov          #+#    #+#             */
-/*   Updated: 2025/07/07 11:33:48 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/07/07 11:38:27 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ int main() {
 
 		std::cout << "==== Large Span Example:" << std::endl;
 		std::srand(std::time(nullptr));
-		Span sp(10000);
+		Span spLarge(10000);
 
 		for (int i = 0; i < 10000; ++i) {
-			sp.addNumber(std::rand());
+			spLarge.addNumber(std::rand());
 		}
 
-		std::cout << "Shortest span: " << sp.shortestSpan() << std::endl;
-		std::cout << "Longest span: " << sp.longestSpan() << std::endl;
+		std::cout << "Shortest span: " << spLarge.shortestSpan() << std::endl;
+		std::cout << "Longest span: " << spLarge.longestSpan() << std::endl;
 
 		std::cout << "==== Exception Handling Example:" << std::endl;
 		try {
@@ -119,6 +119,16 @@ int main() {
 		} catch (const std::exception& e) {
 			std::cerr << "Exception: " << e.what() << std::endl;
 		}
+
+		std::cout << "==== Tests provided by the subject:" << std::endl;
+		Span sp = Span(5);
+		sp.addNumber(6);
+		sp.addNumber(3);
+		sp.addNumber(17);
+		sp.addNumber(9);
+		sp.addNumber(11);
+		std::cout << sp.shortestSpan() << std::endl;
+		std::cout << sp.longestSpan() << std::endl;
 	} catch (const std::exception& e) {
 		std::cerr << "Unexpected exception: " << e.what() << std::endl;
 		return 1;
