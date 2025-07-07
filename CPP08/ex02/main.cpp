@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 13:45:53 by irychkov          #+#    #+#             */
-/*   Updated: 2025/07/07 14:05:56 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/07/07 14:43:40 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,29 @@ int main( void )
 		}
 		std::list<int> s_list(mstack_list);
 		std::cout << "Test with list passed successfully!" << std::endl;
+
+		std::cout << "\n==== My tests with MutantStack ====" << std::endl;
+		MutantStack<int> myStack;
+		std::cout << "Size of my stack: " << myStack.size() << std::endl;
+		myStack.push(1);
+		myStack.push(2);
+		myStack.push(3);
+		myStack.push(4);
+		myStack.push(5);
+		std::cout << "We have pushed 5 elements into my stack." << std::endl;
+		std::cout << "Size of my stack: " << myStack.size() << std::endl;
+		std::cout << "Elements in my stack:" << std::endl;
+		for (MutantStack<int>::iterator iter1 = myStack.begin(); iter1 != myStack.end(); ++iter1) {
+			std::cout << *iter1 << " ";
+		}
+		std::cout << std::endl;
+		myStack.pop();
+		std::cout << "Size of my stack after pop: " << myStack.size() << std::endl;
+		std::cout << "Elements in my stack after pop:" << std::endl;
+		for (MutantStack<int>::iterator iter2 = myStack.begin(); iter2 != myStack.end(); ++iter2) {
+			std::cout << *iter2 << " ";
+		}
+		std::cout << std::endl;
 	} catch (const std::exception& e) {
 		std::cerr << "Unexpected exception: " << e.what() << std::endl;
 		return 1;
