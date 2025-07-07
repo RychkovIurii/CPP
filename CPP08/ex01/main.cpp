@@ -6,13 +6,15 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 10:24:30 by irychkov          #+#    #+#             */
-/*   Updated: 2025/07/05 11:17:16 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/07/07 11:33:48 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Span.hpp"
 #include <iostream>
 #include <ctime>
+#include <vector>
+#include <list>
 
 int main() {
 	try {
@@ -68,6 +70,53 @@ int main() {
 			singleElementSpan.addNumber(42);
 			singleElementSpan.addNumber(42);
 		} catch (const std::overflow_error& e) {
+			std::cerr << "Exception: " << e.what() << std::endl;
+		}
+
+		std::cout << "==== Adding Many Numbers Example:" << std::endl;
+		Span manyNumbersSpan(10);
+		int numbersToAdd[] = {1, 3, 5, 7, 9};
+		manyNumbersSpan.addManyNumbers(numbersToAdd, numbersToAdd + 5);
+		std::cout << "Shortest span after adding many numbers: " << manyNumbersSpan.shortestSpan() << std::endl;
+		std::cout << "Longest span after adding many numbers: " << manyNumbersSpan.longestSpan() << std::endl;
+
+		std::cout << "==== Adding Many Numbers with Valid Range:" << std::endl;
+		std::vector<int> v(10000);
+		for (int& n : v) n = std::rand();
+		Span largeSpan(10000);
+		try {
+			largeSpan.addManyNumbers(v.begin(), v.end());
+			std::cout << "Added 10000 numbers successfully." << std::endl;
+			std::cout << "Shortest span: " << largeSpan.shortestSpan() << std::endl;
+			std::cout << "Longest span: " << largeSpan.longestSpan() << std::endl;
+		} catch (const std::exception& e) {
+			std::cerr << "Exception while adding many numbers: " << e.what() << std::endl;
+		}
+
+		std::cout << "==== Adding Many Numbers with Invalid Range:" << std::endl;
+		std::vector<int> v1(10);
+		for (int& n : v1) n = std::rand();
+		Span invalidSpan(10);
+		try {
+			invalidSpan.addManyNumbers(v1.begin(), v1.begin()); // Empty range
+			std::cout << "Added numbers successfully." << std::endl;
+		} catch (const std::exception& e) {
+			std::cerr << "Exception many numbers: " << e.what() << std::endl;
+		}
+		try {
+			invalidSpan.addManyNumbers(v1.end(), v1.begin()); // Invalid range
+			std::cout << "Added numbers successfully." << std::endl;
+		} catch (const std::exception& e) {
+			std::cerr << "Exception many numbers: " << e.what() << std::endl;
+		}
+
+		std::cout << "==== Adding Many Numbers with Overflow:" << std::endl;
+		std::list<int> l(10);
+		Span overflowSpan(5);
+		try {
+			overflowSpan.addManyNumbers(l.begin(), l.end());
+			std::cout << "Added numbers successfully." << std::endl;
+		} catch (const std::exception& e) {
 			std::cerr << "Exception: " << e.what() << std::endl;
 		}
 	} catch (const std::exception& e) {
