@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 15:05:58 by irychkov          #+#    #+#             */
-/*   Updated: 2025/07/08 10:55:35 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/07/08 11:54:32 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ class BitcoinExchange {
 		BitcoinExchange(const BitcoinExchange &other) = delete;
 		BitcoinExchange &operator=(const BitcoinExchange &other) = delete;
 		~BitcoinExchange() = default;
-		float getExchangeRate(const std::string &date) const;
 		void processInputFile(const std::string &inputFilename) const;
 	private:
 		std::map<std::string, float> exchangeRates;
 		void loadDB(const std::string &dbFilename);
+		float getExchangeRate(const std::string &date) const;
 };
