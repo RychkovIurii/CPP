@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 15:06:02 by irychkov          #+#    #+#             */
-/*   Updated: 2025/07/08 13:11:41 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/07/08 14:02:15 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static bool isValidDate(int year, int month, int day) {
 	};
 	int maxDay = daysInMonth[month - 1];
 
-	// Leap year check for February
 	if (month == 2 &&
 		((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))) {
 		maxDay = 29;
@@ -55,7 +54,6 @@ void BitcoinExchange::loadDB(const std::string &dbFilename) {
 	if (!dbFile.is_open()) {
 		throw std::runtime_error("Could not open database file: " + dbFilename);
 	}
-	// Read db and populate exchangeRates
 	std::string line;
 	std::getline(dbFile, line);
 	if (line != "date,exchange_rate") {
@@ -100,7 +98,7 @@ void BitcoinExchange::loadDB(const std::string &dbFilename) {
 	if (exchangeRates.rbegin()->first > today) {
 		throw std::runtime_error("Database contains future dates: " + exchangeRates.rbegin()->first);
 	}
-	std::cout << "Database loaded successfully with " << exchangeRates.size() << " entries." << std::endl;
+	//std::cout << "Database loaded successfully with " << exchangeRates.size() << " entries." << std::endl;
 }
 
 float BitcoinExchange::getExchangeRate(const std::string &date) const {
@@ -118,14 +116,12 @@ float BitcoinExchange::getExchangeRate(const std::string &date) const {
 void BitcoinExchange::processInputFile(const std::string &inputFilename) const {
 	std::ifstream inputFile(inputFilename);
 	if (!inputFile.is_open()) {
-		std::cout << "Error: could not open file." << std::endl;
-		return;
+		throw std::runtime_error("could not open file.");
 	}
 	std::string line;
 	std::getline(inputFile, line);
 	if (line != "date | value") {
-		std::cout << "Invalid headers: " << inputFilename << std::endl;
-		return;
+		throw std::runtime_error("Invalid headers: " + inputFilename);
 	}
 	std::regex pattern(R"(^(\d{4})-(\d{2})-(\d{2}) \| (-?\d+(\.\d+)?)$)");
 	std::smatch match;
