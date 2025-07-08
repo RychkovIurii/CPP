@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 15:06:02 by irychkov          #+#    #+#             */
-/*   Updated: 2025/07/08 10:16:23 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/07/08 11:49:54 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include <regex>
 #include <iomanip>
 #include <ctime>
+#include <stdexcept>
+#include <limits>
 
 BitcoinExchange::BitcoinExchange(const std::string &dbFilename) {
 	loadDB(dbFilename);
@@ -39,7 +41,7 @@ static bool isValidDate(int year, int month, int day) {
 	return day >= 1 && day <= maxDay;
 }
 
-std::string getTodayDate() {
+static std::string getTodayDate() {
 	std::time_t t = std::time(nullptr);
 	std::tm tm = *std::localtime(&t);
 
@@ -111,4 +113,57 @@ float BitcoinExchange::getExchangeRate(const std::string &date) const {
 	}
 	--it;
 	return it->second;
+}
+
+void BitcoinExchange::processInputFile(const std::string &inputFilename) const {
+	std::ifstream inputFile(inputFilename);
+	if (!inputFile.is_open()) {
+		std::cout << "Error: could not open file." << std::endl;
+		return;
+	}
+	std::string line;
+	std::getline(inputFile, line);
+	if (line != "date | value") {
+		std::cout << "Invalid headers: " << inputFilename << std::endl;
+		return;
+	}
+	std::regex pattern(R"(^(\d{4})-(\d{2})-(\d{2}) \|\s*(-?\d+(\.\d+)?)$)");
+	std::smatch match;
+
+	while (std::getline(inputFile, line)) {
+		if (std::regex_match(line, match, pattern)) {
+			int year = std::stoi(match[1]);
+			int month = std::stoi(match[2]);
+			int day = std::stoi(match[3]);
+			if (!isValidDate(year, month, day)) {
+				std::cout << "Error: bad input => " << line << std::endl;
+				continue;
+			}
+			std::string date = match[1].str() + "-" + match[2].str() + "-" + match[3].str();
+			try {
+				float value = std::stof(match[4]);
+				if (value < 0.0f) {
+					std::cout << "Error: not a positive number." << std::endl;
+					continue;
+				}
+				if (value > 1000.0f) {
+					std::cout << "Error: too large a number." << std::endl;
+					continue;
+				}
+				float rate = getExchangeRate(date);
+				double result = static_cast<double>(value) * static_cast<double>(rate);
+				if (result > std::numeric_limits<float>::max()) {
+					throw std::overflow_error("Result exceeds maximum float value: " + std::to_string(result));
+				}
+				std::cout << date << " => " << value << " = " << result << std::endl;
+			} catch (const std::out_of_range& e) {
+				std::cout << e.what() << std::endl;
+			} catch (const std::exception &e) {
+				std::cout << "Error: " << e.what() << " for date: " << date << std::endl;
+			}
+		} else {
+			std::cout << "Error: bad input => " << line << std::endl;
+		}
+	}
+	inputFile.close();
 }
