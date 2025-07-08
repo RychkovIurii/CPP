@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 15:06:02 by irychkov          #+#    #+#             */
-/*   Updated: 2025/07/08 12:41:18 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/07/08 13:11:41 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ float BitcoinExchange::getExchangeRate(const std::string &date) const {
 		return it->second;
 	}
 	if (it == exchangeRates.begin()) {
-		throw std::out_of_range("no exchange rate available for date: " + date);
+		throw std::out_of_range("no exchange rate available");
 	}
 	--it;
 	return it->second;
@@ -153,6 +153,10 @@ void BitcoinExchange::processInputFile(const std::string &inputFilename) const {
 				double value;
 				try {
 				value = std::stod(match[4]);
+				} catch (const std::exception &e) {
+					std::cout << "Error: bad input => " << line << std::endl;
+					continue;
+				}
 				if (value < 0.0) {
 					std::cout << "Error: not a positive number." << std::endl;
 					continue;
@@ -161,18 +165,13 @@ void BitcoinExchange::processInputFile(const std::string &inputFilename) const {
 					std::cout << "Error: too large a number." << std::endl;
 					continue;
 				}
-				} catch (const std::exception &e) {
-					std::cout << "Error: bad input => " << line << std::endl;
-					continue;
-				}					
 				float rate = getExchangeRate(date);
 				double result = value * static_cast<double>(rate);
 				if (result > std::numeric_limits<float>::max()) {
-					throw std::overflow_error("Result exceeds maximum float value: " + std::to_string(result));
+					std::cout << "Result exceeds maximum float value: " + std::to_string(result) << "for date: " << date << std::endl;
+					continue;
 				}
 				std::cout << date << " => " << value << " = " << result << std::endl;
-			} catch (const std::out_of_range& e) {
-				std::cout << "Error: " << e.what() << std::endl;
 			} catch (const std::exception &e) {
 				std::cout << "Error: " << e.what() << " for date: " << date << std::endl;
 			}
