@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 20:28:26 by irychkov          #+#    #+#             */
-/*   Updated: 2025/07/10 11:38:57 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/07/11 10:47:17 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 #include <sstream>
 #include <iostream>
 #include <stdexcept>
+#include <limits>
 
 void RPN::processInput(const std::string &expression) {
-	std::stack<int> stack;
+	std::stack<long long> stack;
 	std::istringstream iss(expression);
 	std::string token;
 	
@@ -28,11 +29,11 @@ void RPN::processInput(const std::string &expression) {
 			if (stack.size() < 2) {
 				throw std::runtime_error("not enough operands for operation");
 			}
-			int x = stack.top();
+			long long x = stack.top();
 			stack.pop();
-			int y = stack.top();
+			long long y = stack.top();
 			stack.pop();
-			int result;
+			long long result;
 
 			if (token[0] == '+') {
 				result = y + x;
@@ -48,6 +49,9 @@ void RPN::processInput(const std::string &expression) {
 			}
 			else {
 				throw std::runtime_error("unknown operator: " + token);
+			}
+			if (result < std ::numeric_limits<int>::min() || result > std::numeric_limits<int>::max()) {
+				throw std::runtime_error("result out of bounds. Expected int range.");
 			}
 			stack.push(result);
 		} else {
