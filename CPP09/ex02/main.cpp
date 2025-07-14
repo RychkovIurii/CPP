@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 11:08:51 by irychkov          #+#    #+#             */
-/*   Updated: 2025/07/14 12:11:28 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/07/14 12:43:29 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,25 @@ int main(int argc, char **argv)
 		}
 		std::cout << std::endl;
 
-		std::vector<int> vec(input);
+		/* The indication of the time is deliberately strange in this example.
+		Of course you have to indicate the time used to perform all your
+		operations, both the sorting part and the data management part.
+		*/
 		auto startTimeForVector = std::chrono::high_resolution_clock::now();
+		std::vector<int> vec(input);
 		PmergeMe::sortVector(vec);
 		auto endTimeForVector = std::chrono::high_resolution_clock::now();
 
-		std::deque<int> deq(input.begin(), input.end());
 		auto startTimeForDeque = std::chrono::high_resolution_clock::now();
+		std::deque<int> deq(input.begin(), input.end());
 		PmergeMe::sortDeque(deq);
 		auto endTimeForDeque = std::chrono::high_resolution_clock::now();
 		
 		std::cout << "After: ";
-		for (size_t i = 0; i < input.size(); ++i) {
+		for (size_t i = 0; i < vec.size(); ++i) {
 			if (i != 0)
 				std::cout << " ";
-			std::cout << input[i];
+			std::cout << vec[i];
 		}
 		std::cout << std::endl;
 
