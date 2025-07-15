@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 11:08:40 by irychkov          #+#    #+#             */
-/*   Updated: 2025/07/15 11:21:22 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/07/15 12:20:14 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,40 @@
 
 #include <algorithm>
 #include <iostream>
+/**
+ * Verifies if the sorting of a vector and a deque is correct.
+ * 
+ * This function checks if both the vector and deque are of the same size,
+ * if they are sorted in ascending order, and if their elements match at
+ * corresponding indices.
+ * 
+ * @param vec The vector to verify
+ * @param deq The deque to verify
+ * @return void
+ */
+void PmergeMe::verifySorting(const std::vector<int> &vec,
+		const std::deque<int> &deq) {
+	if (vec.size() != deq.size()) {
+		std::cout << "WARNING: Vector and deque sizes do not match." << std::endl;
+		return;
+	}
+	if (!std::is_sorted(vec.begin(), vec.end())) {
+		std::cout << "WARNING: Vector is not sorted." << std::endl;
+		return;
+	}
+	if (!std::is_sorted(deq.begin(), deq.end())) {
+		std::cout << "WARNING: Deque is not sorted." << std::endl;
+		return;
+	}
+	for (size_t i = 0; i < vec.size(); ++i) {
+		if (vec[i] != deq[i]) {
+			std::cout << "WARNING: Vector and deque elements do not match at index "
+				<< i << ": " << vec[i] << " != " << deq[i] << std::endl;
+			return;
+		}
+	}
+	std::cout << "Both vector and deque are sorted and match." << std::endl;
+}
 
 /**
  * Creates the Jacobsthal insertion order for the Ford-Johnson algorithm.
@@ -55,7 +89,7 @@ static std::vector<size_t> createJacobsthalOrder(size_t n) {
 	// Add any remaining elements that weren't covered by Jacobsthal numbers
 	for (size_t i = 1; i < n; ++i) {
 		if (!used[i])
-				order.push_back(i);
+			order.push_back(i);
 	}
 	return order;
 }

@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 11:08:51 by irychkov          #+#    #+#             */
-/*   Updated: 2025/07/15 11:53:50 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/07/15 12:21:19 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,9 @@ static void performSortingBenchmark(const std::vector<int> &input) {
 	std::deque<int> deq(input.begin(), input.end());
 	PmergeMe::sortDeque(deq);
 	auto endTimeForDeque = std::chrono::high_resolution_clock::now();
+	
+	// Verify sorting correctness
+	PmergeMe::verifySorting(vec, deq);
 	
 	// Print results
 	printSequence("After: ", vec);
