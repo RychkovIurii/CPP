@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 11:08:40 by irychkov          #+#    #+#             */
-/*   Updated: 2025/07/15 11:07:24 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/07/15 11:16:15 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,10 +113,23 @@ void PmergeMe::sortDeque(std::deque<int> &deq) {
 	if (deq.size() % 2 == 1)
 		bigs.push_back(deq.back());
 	sortDeque(bigs);
-	for (size_t j = 0; j < smalls.size(); ++j) {
-		int val = smalls[j];
-		std::deque<int>::iterator pos = std::lower_bound(bigs.begin(), bigs.end(), val);
+	std::vector<size_t> jacob = createJacobsthalOrder(smalls.size());
+	std::vector<bool> inserted(smalls.size(), false);
+	for (size_t idx : jacob) {
+		if (idx-1 >= smalls.size())
+			break;
+		int val = smalls[idx-1];
+		auto pos = std::lower_bound(bigs.begin(), bigs.end(), val);
 		bigs.insert(pos, val);
+		inserted[idx-1] = true;
+	}
+
+	for (size_t j = 0; j < smalls.size(); ++j) {
+		if (!inserted[j]) {
+			int val = smalls[j];
+			auto pos = std::lower_bound(bigs.begin(), bigs.end(), val);
+			bigs.insert(pos, val);
+		}
 	}
 	deq.swap(bigs);
 }
