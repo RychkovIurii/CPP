@@ -139,3 +139,12 @@ Since there are only $\lfloor n/2 \rfloor$ small elements, you only do $O(n \log
 
 ---
 
+
+jacobsthal = [1]
+while jacobsthal.back() < smalls.size():
+    jacobsthal.push_back(jacobsthal[-1] + 2 * jacobsthal[-2])
+
+for index in jacobsthal:
+    if index-1 >= smalls.size(): break
+    val = smalls[index-1]
+    insert val into bigs (binary search)
