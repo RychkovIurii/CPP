@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 11:08:40 by irychkov          #+#    #+#             */
-/*   Updated: 2025/07/15 10:23:44 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/07/15 11:07:24 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,38 @@
 
 #include <algorithm>
 #include <iostream>
+
+static std::vector<size_t> createJacobsthalOrder(size_t n) {
+	std::vector<size_t> order;
+	if (n <= 1)
+		return order;
+
+	std::vector<size_t> jacob;
+	jacob.push_back(1);
+	size_t j1 = 1;
+	size_t j2 = 3;
+	while (j2 <= n) {
+		jacob.push_back(j2);
+		size_t tmp = j2;
+		j2 = j2 + 2 * j1;
+		j1 = tmp;
+	}
+
+	std::vector<bool> used(n, false);
+	used[0] = true;
+	for (size_t i = 1; i < jacob.size(); ++i) {
+		size_t idx = jacob[i] - 1;
+		if (idx < n) {
+			order.push_back(idx);
+			used[idx] = true;
+		}
+	}
+	for (size_t i = 1; i < n; ++i) {
+		if (!used[i])
+				order.push_back(i);
+	}
+	return order;
+}
 
 void PmergeMe::sortVector(std::vector<int> &vec) {
 	if (vec.size() <= 1)
@@ -36,11 +68,27 @@ void PmergeMe::sortVector(std::vector<int> &vec) {
 	}
 	if (vec.size() % 2 == 1)
 		bigs.push_back(vec.back());
+
 	sortVector(bigs);
-	for (size_t j = 0; j < smalls.size(); ++j) {
-		int val = smalls[j];
-		std::vector<int>::iterator pos = std::lower_bound(bigs.begin(), bigs.end(), val);
+	
+	std::vector<size_t> jacob = createJacobsthalOrder(smalls.size());
+	std::vector<bool> inserted(smalls.size(), false);
+
+	for (size_t idx : jacob) {
+		if (idx-1 >= smalls.size())
+			break;
+		int val = smalls[idx-1];
+		auto pos = std::lower_bound(bigs.begin(), bigs.end(), val);
 		bigs.insert(pos, val);
+		inserted[idx-1] = true;
+	}
+
+	for (size_t j = 0; j < smalls.size(); ++j) {
+		if (!inserted[j]) {
+			int val = smalls[j];
+			auto pos = std::lower_bound(bigs.begin(), bigs.end(), val);
+			bigs.insert(pos, val);
+		}
 	}
 	vec.swap(bigs);
 }
