@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 11:08:51 by irychkov          #+#    #+#             */
-/*   Updated: 2025/07/14 12:43:29 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/07/15 11:46:39 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,43 @@
 #include <stdexcept>
 #include <chrono>
 #include <iomanip>
+#include <cctype>
+
+bool isValidNumber(const std::string &arg, int &num) {
+	if (arg.empty()) {
+		std::cerr << "Error: Empty argument is not a valid number." << std::endl;
+		return false;
+	}
+	size_t start = 0;
+	if (arg[0] == '+' || arg[0] == '-') {
+		start = 1;
+		if (arg.length() == 1) {
+			std::cerr << "Error: Invalid number format: " << arg << std::endl;
+			return false;
+		}
+	}
+	for (size_t i = start; i < arg.length(); ++i) {
+		if (!std::isdigit(arg[i])) {
+			std::cerr << "Error: Invalid number format: " << arg << std::endl;
+			return false;
+		}
+	}
+	try {
+		num = std::stoi(arg);
+		if (num < 0) {
+			std::cerr << "Error: Negative numbers are not allowed: " << arg << std::endl;
+			return false;
+		}
+	} catch (const std::out_of_range &) {
+		std::cerr << "Error: Number out of range: " << arg << std::endl;
+		return false; // Number is too large
+	} catch (const std::invalid_argument &) {
+		std::cerr << "Error: Invalid number format: " << arg << std::endl;
+		return false; // Invalid number format
+	}
+	return true; // Valid number
+}
+	
 
 int main(int argc, char **argv)
 {
@@ -28,9 +65,11 @@ int main(int argc, char **argv)
 		// Main logic to process the input numbers
 		std::vector<int> input;
 		for (int i = 1; i < argc; ++i) {
-			int num = std::stoi(argv[i]);
-			if (num < 0) {
-				throw std::invalid_argument("Negative numbers are not allowed.");
+			std::string arg = argv[i];
+			int num;
+			// Validate the number format
+			if (!isValidNumber(arg, num)) {
+				return 1; // Exit if invalid number
 			}
 			input.push_back(num);
 		}
