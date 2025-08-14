@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 11:08:40 by irychkov          #+#    #+#             */
-/*   Updated: 2025/08/14 09:33:15 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/08/14 10:17:42 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,11 @@ void PmergeMe::sortVector(std::vector<int> &vec) {
 	// Base case: arrays with 0 or 1 element are already sorted
 	if (vec.size() <= 1)
 		return;
+	if (vec.size() == 2) {
+				if (CountingLess()(vec[1], vec[0]))
+						std::swap(vec[0], vec[1]);
+				return;
+		}
 	
 	// Initialize containers for larger and smaller elements from pairs
 	std::vector<int> bigs;
@@ -146,6 +151,9 @@ void PmergeMe::sortVector(std::vector<int> &vec) {
 	if (vec.size() % 2 == 1)
 		bigs.push_back(vec.back());
 
+	// Keep a copy of the big elements before sorting to locate bounds later
+	std::vector<int> bigLinks = bigs;
+
 	// Step 2: Recursively sort the bigs array
 	// After this, bigs is sorted and each element in smalls[i] < bigs[i]
 	sortVector(bigs);
@@ -160,8 +168,9 @@ void PmergeMe::sortVector(std::vector<int> &vec) {
 		if (idx >= smalls.size())  // Safety check for index bounds
 			break;
 		int val = smalls[idx];
-		// Use binary search to find optimal insertion position
-		auto pos = std::lower_bound(bigs.begin(), bigs.end(), val, CountingLess());
+		// bound is the position of the big element paired with this small
+		auto boundIt = std::find(bigs.begin(), bigs.end(), bigLinks[idx]);
+		auto pos = std::lower_bound(bigs.begin(), boundIt, val, CountingLess());
 		bigs.insert(pos, val);
 		inserted[idx] = true;  // Mark as inserted
 	}
@@ -170,7 +179,8 @@ void PmergeMe::sortVector(std::vector<int> &vec) {
 	for (size_t j = 0; j < smalls.size(); ++j) {
 		if (!inserted[j]) {
 			int val = smalls[j];
-			auto pos = std::lower_bound(bigs.begin(), bigs.end(), val, CountingLess());
+			auto boundIt = std::find(bigs.begin(), bigs.end(), bigLinks[j]);
+			auto pos = std::lower_bound(bigs.begin(), boundIt, val, CountingLess());
 			bigs.insert(pos, val);
 		}
 	}
@@ -191,11 +201,16 @@ void PmergeMe::sortDeque(std::deque<int> &deq) {
 	// Base case: arrays with 0 or 1 element are already sorted
 	if (deq.size() <= 1)
 		return;
-	
+	if (deq.size() == 2) {
+			if (CountingLess()(deq[1], deq[0]))
+					std::swap(deq[0], deq[1]);
+			return;
+	}
+
 	// Initialize containers for larger and smaller elements from pairs
 	std::deque<int> bigs;
 	std::deque<int> smalls;
-	
+
 	// Step 1: Pair elements and separate into bigs (larger) and smalls (smaller)
 	size_t i = 0;
 	for (; i + 1 < deq.size(); i += 2) {
@@ -212,7 +227,10 @@ void PmergeMe::sortDeque(std::deque<int> &deq) {
 	// Handle odd-sized arrays: add the last unpaired element to bigs
 	if (deq.size() % 2 == 1)
 		bigs.push_back(deq.back());
-	
+
+	// Keep a copy of the big elements before sorting to locate bounds later
+	std::deque<int> bigLinks = bigs;
+
 	// Step 2: Recursively sort the bigs array
 	// After this, bigs is sorted and each element in smalls[i] < bigs[i]
 	sortDeque(bigs);
@@ -227,8 +245,9 @@ void PmergeMe::sortDeque(std::deque<int> &deq) {
 		if (idx >= smalls.size())  // Safety check for index bounds
 			break;
 		int val = smalls[idx];
+		auto boundIt = std::find(bigs.begin(), bigs.end(), bigLinks[idx]);
 		// Use binary search to find optimal insertion position
-		auto pos = std::lower_bound(bigs.begin(), bigs.end(), val, CountingLess());
+		auto pos = std::lower_bound(bigs.begin(), boundIt, val, CountingLess());
 		bigs.insert(pos, val);
 		inserted[idx] = true;  // Mark as inserted
 	}
@@ -237,7 +256,8 @@ void PmergeMe::sortDeque(std::deque<int> &deq) {
 	for (size_t j = 0; j < smalls.size(); ++j) {
 		if (!inserted[j]) {
 			int val = smalls[j];
-			auto pos = std::lower_bound(bigs.begin(), bigs.end(), val, CountingLess());
+			auto boundIt = std::find(bigs.begin(), bigs.end(), bigLinks[j]);
+			auto pos = std::lower_bound(bigs.begin(), boundIt, val, CountingLess());
 			bigs.insert(pos, val);
 		}
 	}
