@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 11:08:51 by irychkov          #+#    #+#             */
-/*   Updated: 2025/07/15 12:21:19 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/08/14 09:09:41 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,19 @@
 #include <chrono>
 #include <iomanip>
 #include <cctype>
+#include <cmath>
+#include <cstddef>
+
+extern std::size_t g_comparisonCount;
+
+static std::size_t F(int n) {
+		std::size_t sum = 0;
+		for (int k = 1; k <= n; ++k) {
+				double value = 0.75 * k;
+				sum += static_cast<std::size_t>(std::ceil(std::log2(value)));
+		}
+		return sum;
+}
 
 /**
  * Validates if a string represents a valid positive integer.
@@ -115,22 +128,32 @@ static void printSequence(const std::string &label, const Container &container) 
  */
 static void performSortingBenchmark(const std::vector<int> &input) {
 	// Benchmark vector sorting
+	g_comparisonCount = 0;
 	auto startTimeForVector = std::chrono::high_resolution_clock::now();
 	std::vector<int> vec(input);
 	PmergeMe::sortVector(vec);
 	auto endTimeForVector = std::chrono::high_resolution_clock::now();
+	std::size_t vectorComparisons = g_comparisonCount;
 
 	// Benchmark deque sorting
+	g_comparisonCount = 0;
 	auto startTimeForDeque = std::chrono::high_resolution_clock::now();
 	std::deque<int> deq(input.begin(), input.end());
 	PmergeMe::sortDeque(deq);
 	auto endTimeForDeque = std::chrono::high_resolution_clock::now();
+	std::size_t dequeComparisons = g_comparisonCount;
 	
 	// Verify sorting correctness
 	PmergeMe::verifySorting(vec, deq);
 	
 	// Print results
 	printSequence("After: ", vec);
+
+	std::size_t maxComp = F(vec.size());
+	std::cout << "Actual vector comparisons: " << vectorComparisons << std::endl;
+	std::cout << "Actual deque comparisons: " << dequeComparisons << std::endl;
+	std::cout << "Max comparisons F(n): " << maxComp << std::endl;
+
 
 	// Calculate and display timing results
 	std::chrono::duration<double, std::micro> durationForVector = endTimeForVector - startTimeForVector;

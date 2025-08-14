@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 11:08:40 by irychkov          #+#    #+#             */
-/*   Updated: 2025/07/15 12:20:14 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/08/14 09:33:15 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,19 @@
 
 #include <algorithm>
 #include <iostream>
+#include <cstddef>
+
+// Global counter for element comparisons
+std::size_t g_comparisonCount = 0;
+
+// Comparator that increments the global counter on each comparison
+struct CountingLess {
+		bool operator()(int a, int b) const {
+				++g_comparisonCount;
+				return a < b;
+		}
+};
+
 /**
  * Verifies if the sorting of a vector and a deque is correct.
  * 
@@ -121,7 +134,7 @@ void PmergeMe::sortVector(std::vector<int> &vec) {
 	for (; i + 1 < vec.size(); i += 2) {
 		int a = vec[i];
 		int b = vec[i + 1];
-		if (a > b) {
+		if (CountingLess()(b, a)) {
 			bigs.push_back(a);     // a is larger
 			smalls.push_back(b);   // b is smaller
 		} else {
@@ -144,20 +157,20 @@ void PmergeMe::sortVector(std::vector<int> &vec) {
 
 	// Insert elements according to Jacobsthal order
 	for (size_t idx : jacob) {
-		if (idx-1 >= smalls.size())  // Safety check for index bounds
+		if (idx >= smalls.size())  // Safety check for index bounds
 			break;
-		int val = smalls[idx-1];
+		int val = smalls[idx];
 		// Use binary search to find optimal insertion position
-		auto pos = std::lower_bound(bigs.begin(), bigs.end(), val);
+		auto pos = std::lower_bound(bigs.begin(), bigs.end(), val, CountingLess());
 		bigs.insert(pos, val);
-		inserted[idx-1] = true;  // Mark as inserted
+		inserted[idx] = true;  // Mark as inserted
 	}
 
 	// Insert any remaining elements that weren't covered by Jacobsthal order
 	for (size_t j = 0; j < smalls.size(); ++j) {
 		if (!inserted[j]) {
 			int val = smalls[j];
-			auto pos = std::lower_bound(bigs.begin(), bigs.end(), val);
+			auto pos = std::lower_bound(bigs.begin(), bigs.end(), val, CountingLess());
 			bigs.insert(pos, val);
 		}
 	}
@@ -188,7 +201,7 @@ void PmergeMe::sortDeque(std::deque<int> &deq) {
 	for (; i + 1 < deq.size(); i += 2) {
 		int a = deq[i];
 		int b = deq[i + 1];
-		if (a > b) {
+		if (CountingLess()(b, a)) {
 			bigs.push_back(a);     // a is larger
 			smalls.push_back(b);   // b is smaller
 		} else {
@@ -211,20 +224,20 @@ void PmergeMe::sortDeque(std::deque<int> &deq) {
 	
 	// Insert elements according to Jacobsthal order
 	for (size_t idx : jacob) {
-		if (idx-1 >= smalls.size())  // Safety check for index bounds
+		if (idx >= smalls.size())  // Safety check for index bounds
 			break;
-		int val = smalls[idx-1];
+		int val = smalls[idx];
 		// Use binary search to find optimal insertion position
-		auto pos = std::lower_bound(bigs.begin(), bigs.end(), val);
+		auto pos = std::lower_bound(bigs.begin(), bigs.end(), val, CountingLess());
 		bigs.insert(pos, val);
-		inserted[idx-1] = true;  // Mark as inserted
+		inserted[idx] = true;  // Mark as inserted
 	}
 
 	// Insert any remaining elements that weren't covered by Jacobsthal order
 	for (size_t j = 0; j < smalls.size(); ++j) {
 		if (!inserted[j]) {
 			int val = smalls[j];
-			auto pos = std::lower_bound(bigs.begin(), bigs.end(), val);
+			auto pos = std::lower_bound(bigs.begin(), bigs.end(), val, CountingLess());
 			bigs.insert(pos, val);
 		}
 	}
