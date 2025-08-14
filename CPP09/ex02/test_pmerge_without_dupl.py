@@ -51,7 +51,7 @@ def test_small():
 
 
 def test_large():
-    args = [random.randint(1, 100000) for _ in range(3000)]
+    args = random.sample(range(1, 10000000), 3000)  # unique values only
     res = run_cmd(args)
     assert res.returncode == 0, res.stderr
     assert parse_after(res.stdout) == sorted(args)
@@ -72,14 +72,13 @@ def test_comparison_validation():
         [2, 1],
         [3, 1, 2],
         [5, 3, 1, 4, 2],
-		[3, 5, 9, 7, 4],  # n=5
+        [3, 5, 9, 7, 4],  # n=5
         [8, 7, 6, 5, 4, 3, 2, 1],
-		list(range(10, 0, -1)),  # n=10, reverse sorted
+        list(range(10, 0, -1)),  # n=10, reverse sorted
         list(range(20, 0, -1)),  # reverse sorted
-		[5] * 15,  # n=15, all duplicates
         list(range(1, 21)),       # already sorted
-		[random.randint(1, 1000) for _ in range(50)],  # n=50, random
-        [random.randint(1, 1000) for _ in range(100)]
+        random.sample(range(1, 10000), 50),  # n=50, unique random
+        random.sample(range(10001, 20000), 100)  # n=100, unique random
     ]
     
     for args in test_cases:
@@ -164,34 +163,18 @@ def test_duplicates():
     """Test with duplicate numbers"""
     args = [5, 3, 5, 1, 3, 8, 1, 5]
     res = run_cmd(args)
-    assert res.returncode == 0, f"Failed on duplicates: {args}. Error: {res.stderr}"
-    assert parse_after(res.stdout) == sorted(args)
-    
-    # Check comparison counts
-    actual_vec, actual_deq, max_comp = parse_comparisons(res.stdout)
-    if actual_vec is not None and max_comp is not None:
-        assert actual_vec <= max_comp, f"Vector comparisons {actual_vec} exceed maximum {max_comp} for duplicates: {args}"
-    if actual_deq is not None and max_comp is not None:
-        assert actual_deq <= max_comp, f"Deque comparisons {actual_deq} exceed maximum {max_comp} for duplicates: {args}"
-    
-    print("✅ duplicates")
+    assert res.returncode != 0, f"Duplicates should be rejected: {args}"
+    assert res.stderr, "Error message should be present for duplicates"
+    print("✅ duplicates rejected")
 
 
 def test_all_same():
     """Test with all identical numbers"""
     args = [7, 7, 7, 7, 7]
     res = run_cmd(args)
-    assert res.returncode == 0, f"Failed on all same: {args}. Error: {res.stderr}"
-    assert parse_after(res.stdout) == sorted(args)
-    
-    # Check comparison counts
-    actual_vec, actual_deq, max_comp = parse_comparisons(res.stdout)
-    if actual_vec is not None and max_comp is not None:
-        assert actual_vec <= max_comp, f"Vector comparisons {actual_vec} exceed maximum {max_comp} for all same: {args}"
-    if actual_deq is not None and max_comp is not None:
-        assert actual_deq <= max_comp, f"Deque comparisons {actual_deq} exceed maximum {max_comp} for all same: {args}"
-    
-    print("✅ all same numbers")
+    assert res.returncode != 0, f"All same values should be rejected: {args}"
+    assert res.stderr, "Error message should be present for all same values"
+    print("✅ all same numbers rejected")
 
 
 def test_max_int():
@@ -216,17 +199,9 @@ def test_zero():
     """Test with zero values"""
     args = [0, 5, 0, 3, 0]
     res = run_cmd(args)
-    assert res.returncode == 0, f"Failed on zero values: {args}. Error: {res.stderr}"
-    assert parse_after(res.stdout) == sorted(args)
-    
-    # Check comparison counts
-    actual_vec, actual_deq, max_comp = parse_comparisons(res.stdout)
-    if actual_vec is not None and max_comp is not None:
-        assert actual_vec <= max_comp, f"Vector comparisons {actual_vec} exceed maximum {max_comp} for zero values: {args}"
-    if actual_deq is not None and max_comp is not None:
-        assert actual_deq <= max_comp, f"Deque comparisons {actual_deq} exceed maximum {max_comp} for zero values: {args}"
-    
-    print("✅ zero values")
+    assert res.returncode != 0, f"Duplicate zero values should be rejected: {args}"
+    assert res.stderr, "Error message should be present for duplicate zero values"
+    print("✅ duplicate zero values rejected")
 
 
 def test_invalid_negative():
@@ -305,7 +280,7 @@ def test_large_number_overflow():
 
 def test_very_large_input():
     """Test with very large valid input set"""
-    args = [random.randint(1, 1000000) for _ in range(5000)]
+    args = random.sample(range(1, 10000000), 5000)  # unique values only
     res = run_cmd(args)
     assert res.returncode == 0, f"Failed on very large input ({len(args)} elements). Error: {res.stderr}"
     result = parse_after(res.stdout)
@@ -324,7 +299,7 @@ def test_very_large_input():
 
 def test_performance_output():
     """Test that performance timing is included in output"""
-    args = [random.randint(1, 1000) for _ in range(100)]
+    args = random.sample(range(1, 10000), 100)  # unique values only
     res = run_cmd(args)
     assert res.returncode == 0, res.stderr
     output = res.stdout
@@ -359,9 +334,9 @@ def test_consecutive_duplicates():
     """Test with many consecutive duplicates"""
     args = [1, 1, 1, 2, 2, 2, 3, 3, 3]
     res = run_cmd(args)
-    assert res.returncode == 0, res.stderr
-    assert parse_after(res.stdout) == sorted(args)
-    print("✅ consecutive duplicates")
+    assert res.returncode != 0, "Consecutive duplicates should be rejected"
+    assert res.stderr, "Error message should be present for consecutive duplicates"
+    print("✅ consecutive duplicates rejected")
 
 
 def test_alternating_pattern():
@@ -375,7 +350,7 @@ def test_alternating_pattern():
 
 def test_performance_comparison():
     """Test that both vector and deque times are reported"""
-    args = [random.randint(1, 1000) for _ in range(1000)]
+    args = random.sample(range(1, 10000), 1000)  # unique values only
     res = run_cmd(args)
     assert res.returncode == 0, res.stderr
     
@@ -408,7 +383,7 @@ def test_boundary_values():
 
 def test_subject_requirement_3000():
     """Test specifically with 3000+ elements as mentioned in subject"""
-    args = [random.randint(1, 100000) for _ in range(3000)]
+    args = random.sample(range(1, 10000000), 3000)  # unique values only
     res = run_cmd(args)
     assert res.returncode == 0, res.stderr
     result = parse_after(res.stdout)
@@ -434,7 +409,7 @@ def test_subject_requirement_3000():
 def test_extreme_performance():
     """Test with maximum reasonable input size"""
     print("Running extreme performance test (10000 elements)...")
-    args = [random.randint(1, 1000000) for _ in range(10000)]
+    args = random.sample(range(1, 10000000), 10000)  # unique values only
     res = run_cmd(args)
     assert res.returncode == 0, res.stderr
     result = parse_after(res.stdout)

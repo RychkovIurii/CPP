@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 11:08:51 by irychkov          #+#    #+#             */
-/*   Updated: 2025/08/14 09:09:41 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/08/14 12:01:21 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ extern std::size_t g_comparisonCount;
 static std::size_t F(int n) {
 		std::size_t sum = 0;
 		for (int k = 1; k <= n; ++k) {
-				double value = 0.75 * k;
+				double value = (3.0 / 4.0) * k;
 				sum += static_cast<std::size_t>(std::ceil(std::log2(value)));
 		}
 		return sum;
