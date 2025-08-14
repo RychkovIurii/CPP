@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 11:08:40 by irychkov          #+#    #+#             */
-/*   Updated: 2025/08/14 10:36:29 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/08/14 20:56:30 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,51 +63,6 @@ void PmergeMe::verifySorting(const std::vector<int> &vec,
 }
 
 /**
- * Creates the Jacobsthal insertion order for the Ford-Johnson algorithm.
- * The Jacobsthal sequence minimizes the number of comparisons needed
- * when inserting elements using binary search.
- * 
- * @param n The number of elements to order
- * @return Vector containing the optimal insertion order indices
- */
-static std::vector<size_t> createJacobsthalOrder(size_t n) {
-	std::vector<size_t> order;
-	if (n <= 1)
-		return order;
-
-	// Generate Jacobsthal numbers: J(0)=0, J(1)=1, J(k)=J(k-1)+2*J(k-2)
-	// The sequence is: 1, 3, 5, 11, 21, 43, 85, 171, ...
-	std::vector<size_t> jacob;
-	jacob.push_back(1);
-	size_t j1 = 1;
-	size_t j2 = 3;
-	while (j2 <= n) {
-		jacob.push_back(j2);
-		size_t tmp = j2;
-		j2 = j2 + 2 * j1;
-		j1 = tmp;
-	}
-
-	// Create insertion order based on Jacobsthal numbers
-	// This order minimizes the maximum number of comparisons
-	std::vector<bool> used(n, false);
-	used[0] = true; // First element is already positioned
-	for (size_t i = 1; i < jacob.size(); ++i) {
-		size_t idx = jacob[i] - 1; // Convert to 0-based index
-		if (idx < n) {
-			order.push_back(idx);
-			used[idx] = true;
-		}
-	}
-	// Add any remaining elements that weren't covered by Jacobsthal numbers
-	for (size_t i = 1; i < n; ++i) {
-		if (!used[i])
-			order.push_back(i);
-	}
-	return order;
-}
-
-/**
  * Sorts a vector using the Ford-Johnson merge-insertion algorithm.
  * This algorithm is optimal in terms of worst-case comparisons.
  * 
@@ -119,82 +74,134 @@ static std::vector<size_t> createJacobsthalOrder(size_t n) {
  * @param vec Reference to the vector to be sorted
  */
 void PmergeMe::sortVector(std::vector<int> &vec) {
-	// Base case: arrays with 0 or 1 element are already sorted
-	if (vec.size() <= 1)
-		return;
-	if (vec.size() == 2) {
-				if (CountingLess()(vec[1], vec[0]))
-						std::swap(vec[0], vec[1]);
-				return;
+	// === Phase 1: pairwise block swapping ===
+	auto mergeSortVec = [&](auto& self, size_t pairsize, bool insert) -> void {
+		if (insert == false) {
+			for (size_t i = 0; i < vec.size(); i += pairsize * 2) {
+				size_t mid = i + pairsize;
+				size_t end = std::min(i + pairsize * 2, vec.size());
+				if (vec.size() / 2 < pairsize) { // switch to insertion phase
+					insert = true;
+					return;
+				}
+				if (i + pairsize * 2 > vec.size()) break;
+
+				// Compare tails and swap whole blocks if needed
+				if (mid - 1 < vec.size() && end - 1 < vec.size() &&
+					CountingLess()(vec[end - 1], vec[mid - 1])) {
+					for (size_t k = 0; k < pairsize && mid + k < end; ++k)
+						std::swap(vec[i + k], vec[mid + k]);
+				}
+			}
+			self(self, pairsize * 2, insert);
 		}
-	
-	// Initialize containers for larger and smaller elements from pairs
-	std::vector<int> bigs;
-	std::vector<int> smalls;
-	bigs.reserve((vec.size() + 1) / 2);    // Reserve space for efficiency
-	smalls.reserve(vec.size() / 2);
 
-	bool hasLeftover = (vec.size() % 2 == 1);
-	int leftover = 0;
-
-	// Step 1: Pair elements and separate into bigs (larger) and smalls (smaller)
-	size_t i = 0;
-	for (; i + 1 < vec.size(); i += 2) {
-		int a = vec[i];
-		int b = vec[i + 1];
-		if (CountingLess()(b, a)) {
-			bigs.push_back(a);     // a is larger
-			smalls.push_back(b);   // b is smaller
-		} else {
-			bigs.push_back(b);     // b is larger
-			smalls.push_back(a);   // a is smaller
+		// === Phase 2: build 2D chunks ===
+		struct VChunk { std::vector<int> data; size_t id; };
+		std::vector<VChunk> temp;
+		{
+			size_t nextId = 0;
+			for (size_t i = 0; i < vec.size(); i += pairsize) {
+				std::vector<int> chunk;
+				for (size_t j = i; j < i + pairsize && j < vec.size() && i + pairsize <= vec.size(); ++j)
+					chunk.push_back(vec[j]);
+				if (!chunk.empty())
+					temp.push_back(VChunk{chunk, nextId++});
+			}
 		}
-	}
 
-	if (hasLeftover)
-		leftover = vec.back();
-
-	// Keep a copy of the big elements before sorting to locate bounds later
-	std::vector<int> bigLinks = bigs;
-
-	// Step 2: Recursively sort the bigs array
-	// After this, bigs is sorted and each element in smalls[i] < bigs[i]
-	sortVector(bigs);
-	
-	// Step 3: Insert smalls elements using Jacobsthal order
-	// This order minimizes the worst-case number of comparisons
-	std::vector<size_t> jacob = createJacobsthalOrder(smalls.size());
-	std::vector<bool> inserted(smalls.size(), false);
-
-	// Insert elements according to Jacobsthal order
-	for (size_t idx : jacob) {
-		if (idx >= smalls.size())  // Safety check for index bounds
-			break;
-		int val = smalls[idx];
-		// bound is the position of the big element paired with this small
-		auto boundIt = std::find(bigs.begin(), bigs.end(), bigLinks[idx]);
-		auto pos = std::lower_bound(bigs.begin(), boundIt, val, CountingLess());
-		bigs.insert(pos, val);
-		inserted[idx] = true;  // Mark as inserted
-	}
-
-	// Insert any remaining elements that weren't covered by Jacobsthal order
-	for (size_t j = 0; j < smalls.size(); ++j) {
-		if (!inserted[j]) {
-			int val = smalls[j];
-			auto boundIt = std::find(bigs.begin(), bigs.end(), bigLinks[j]);
-			auto pos = std::lower_bound(bigs.begin(), boundIt, val, CountingLess());
-			bigs.insert(pos, val);
+		// main = b1, a1, a2, ...
+		// pend = b2, b3, ...
+		std::vector<VChunk> pend;
+		std::vector<VChunk> main;
+		for (size_t i = 0; i < temp.size(); ++i) {
+			if (i == 0)            main.push_back(temp[i]);   // b1
+			else if (i % 2 == 0)   pend.push_back(temp[i]);   // b2, b3, ...
+			else                   main.push_back(temp[i]);   // a1, a2, ...
 		}
-	}
 
-	if (hasLeftover) {
-		auto pos = std::lower_bound(bigs.begin(), bigs.end(), leftover, CountingLess());
-		bigs.insert(pos, leftover);
-	}
-	
-	// Replace original vector with sorted result
-	vec.swap(bigs);
+		// === Phase 3: Jacobsthal batches with bounds (anchor a_j) ===
+		size_t jacob = 3;      // J(2)
+		size_t jacob_prev = 1;  // J(1)
+
+		while (!pend.empty()) {
+			size_t batch = jacob - jacob_prev;
+			for (size_t i = 0; i < batch; ++i) {
+				// pick chunk from the current Jacobsthal window
+				VChunk num_to_insert;
+				if (pend.size() >= 1) {
+					if (pend.size() - 1 > batch - 1 - i)
+						num_to_insert = pend[batch - 1 - i];
+					else
+						num_to_insert = pend[pend.size() - 1];
+				} else {
+					num_to_insert = pend[0]; // unreachable
+				}
+
+				// find its original position j in temp by ID (not by value!)
+				size_t jIndex = 0;
+				for (; jIndex < temp.size(); ++jIndex)
+					if (temp[jIndex].id == num_to_insert.id) break;
+
+				// boundElement is position of a_j (temp[j+1]) in main, by ID
+				size_t boundElement = 0;
+				if (jIndex + 1 < temp.size()) {
+					size_t anchorId = temp[jIndex + 1].id; // a_j’s ID
+					bool found = false;
+					for (size_t k = 0; k < main.size(); ++k) {
+						if (main[k].id == anchorId) { boundElement = k; found = true; break; }
+					}
+					if (!found) boundElement = 0; // fallback
+				} else {
+					boundElement = 0; // no a_j → unbounded
+				}
+
+				size_t bound = (boundElement == 0) ? main.size() : boundElement;
+
+				// lower_bound on main[0..bound) by last element of the chunk
+				auto it = std::lower_bound(
+					main.begin(),
+					main.begin() + std::min(bound, main.size()),
+					num_to_insert,
+					[&](const VChunk& A, const VChunk& B) {
+						return CountingLess()(A.data[pairsize - 1], B.data[pairsize - 1]);
+					}
+				);
+
+				// erase from pend by ID (not by content!)
+				auto it2 = std::find_if(pend.begin(), pend.end(),
+					[&](const VChunk& c){ return c.id == num_to_insert.id; });
+
+				if (it2 == pend.end()) {
+					if (it != main.begin() + std::min(bound, main.size()))
+						main.insert(it, num_to_insert);
+					else
+						main.push_back(num_to_insert);
+				} else {
+					if (it != main.begin() + std::min(bound, main.size()))
+						main.insert(it, num_to_insert);
+					else
+						main.insert(main.begin() + std::min(bound, main.size()), num_to_insert);
+					pend.erase(it2);
+				}
+
+				if (pend.empty()) {
+					// flatten main back to vec
+					size_t k = 0;
+					for (size_t j = 0; j < main.size(); ++j)
+						for (size_t l = 0; l < main[j].data.size(); ++l)
+							vec[k++] = main[j].data[l];
+					jacob = 3; jacob_prev = 1;
+					return;
+				}
+			}
+			size_t tmp = jacob;
+			jacob = jacob + 2 * jacob_prev; // J_next = J + 2*J_prev
+			jacob_prev = tmp;
+		}
+	};
+
+	mergeSortVec(mergeSortVec, /*pairsize*/1, /*insert*/false);
 }
 
 /**
@@ -206,78 +213,127 @@ void PmergeMe::sortVector(std::vector<int> &vec) {
  * @param deq Reference to the deque to be sorted
  */
 void PmergeMe::sortDeque(std::deque<int> &deq) {
-	// Base case: arrays with 0 or 1 element are already sorted
-	if (deq.size() <= 1)
-		return;
-	if (deq.size() == 2) {
-			if (CountingLess()(deq[1], deq[0]))
-					std::swap(deq[0], deq[1]);
-			return;
-	}
+	// === Phase 1: pairwise block swapping ===
+	auto mergeSortDeq = [&](auto& self, size_t pairsize, bool insert) -> void {
+		if (insert == false) {
+			for (size_t i = 0; i < deq.size(); i += pairsize * 2) {
+				size_t mid = i + pairsize;
+				size_t end = std::min(i + pairsize * 2, deq.size());
+				if (deq.size() / 2 < pairsize) {
+					insert = true;
+					return;
+				}
+				if (i + pairsize * 2 > deq.size()) break;
 
-	// Initialize containers for larger and smaller elements from pairs
-	std::deque<int> bigs;
-	std::deque<int> smalls;
-
-	bool hasLeftover = (deq.size() % 2 == 1);
-	int leftover = 0;
-
-	// Step 1: Pair elements and separate into bigs (larger) and smalls (smaller)
-	size_t i = 0;
-	for (; i + 1 < deq.size(); i += 2) {
-		int a = deq[i];
-		int b = deq[i + 1];
-		if (CountingLess()(b, a)) {
-			bigs.push_back(a);     // a is larger
-			smalls.push_back(b);   // b is smaller
-		} else {
-			bigs.push_back(b);     // b is larger
-			smalls.push_back(a);   // a is smaller
+				if (mid - 1 < deq.size() && end - 1 < deq.size() &&
+					CountingLess()(deq[end - 1], deq[mid - 1])) {
+					for (size_t k = 0; k < pairsize && mid + k < end; ++k)
+						std::swap(deq[i + k], deq[mid + k]);
+				}
+			}
+			self(self, pairsize * 2, insert);
 		}
-	}
 
-	if (hasLeftover)
-		leftover = deq.back();
-
-	// Keep a copy of the big elements before sorting to locate bounds later
-	std::deque<int> bigLinks = bigs;
-
-	// Step 2: Recursively sort the bigs array
-	// After this, bigs is sorted and each element in smalls[i] < bigs[i]
-	sortDeque(bigs);
-	
-	// Step 3: Insert smalls elements using Jacobsthal order
-	// This order minimizes the worst-case number of comparisons
-	std::vector<size_t> jacob = createJacobsthalOrder(smalls.size());
-	std::vector<bool> inserted(smalls.size(), false);
-	
-	// Insert elements according to Jacobsthal order
-	for (size_t idx : jacob) {
-		if (idx >= smalls.size())  // Safety check for index bounds
-			break;
-		int val = smalls[idx];
-		auto boundIt = std::find(bigs.begin(), bigs.end(), bigLinks[idx]);
-		// Use binary search to find optimal insertion position
-		auto pos = std::lower_bound(bigs.begin(), boundIt, val, CountingLess());
-		bigs.insert(pos, val);
-		inserted[idx] = true;  // Mark as inserted
-	}
-
-	// Insert any remaining elements that weren't covered by Jacobsthal order
-	for (size_t j = 0; j < smalls.size(); ++j) {
-		if (!inserted[j]) {
-			int val = smalls[j];
-			auto boundIt = std::find(bigs.begin(), bigs.end(), bigLinks[j]);
-			auto pos = std::lower_bound(bigs.begin(), boundIt, val, CountingLess());
-			bigs.insert(pos, val);
+		// === Phase 2: build 2D chunks ===
+		struct DChunk { std::deque<int> data; size_t id; };
+		std::deque<DChunk> temp;
+		{
+			size_t nextId = 0;
+			for (size_t i = 0; i < deq.size(); i += pairsize) {
+				std::deque<int> chunk;
+				for (size_t j = i; j < i + pairsize && j < deq.size() && i + pairsize <= deq.size(); ++j)
+					chunk.push_back(deq[j]);
+				if (!chunk.empty())
+					temp.push_back(DChunk{chunk, nextId++});
+			}
 		}
-	}
 
-	if (hasLeftover) {
-		auto pos = std::lower_bound(bigs.begin(), bigs.end(), leftover, CountingLess());
-		bigs.insert(pos, leftover);
-	}
+		std::deque<DChunk> pend;
+		std::deque<DChunk> main;
+		for (size_t i = 0; i < temp.size(); ++i) {
+			if (i == 0)          main.push_back(temp[i]); // b1
+			else if (i % 2 == 0) pend.push_back(temp[i]); // b2, b3, ...
+			else                 main.push_back(temp[i]); // a1, a2, ...
+		}
 
-	// Replace original deque with sorted result
-	deq.swap(bigs);
+		// === Phase 3: Jacobsthal batches with bounds (anchor a_j) ===
+		size_t jacob = 3;      // J(2)
+		size_t jacob_prev = 1;  // J(1)
+
+		while (!pend.empty()) {
+			size_t batch = jacob - jacob_prev;
+			for (size_t i = 0; i < batch; ++i) {
+				DChunk num_to_insert;
+				if (pend.size() >= 1) {
+					if (pend.size() - 1 > batch - 1 - i)
+						num_to_insert = pend[batch - 1 - i];
+					else
+						num_to_insert = pend[pend.size() - 1];
+				} else {
+					num_to_insert = pend[0]; // unreachable
+				}
+
+				// find original index j in temp by ID
+				size_t jIndex = 0;
+				for (; jIndex < temp.size(); ++jIndex)
+					if (temp[jIndex].id == num_to_insert.id) break;
+
+				// bound is a_j (temp[j+1]) located in main by ID
+				size_t boundElement = 0;
+				if (jIndex + 1 < temp.size()) {
+					size_t anchorId = temp[jIndex + 1].id;
+					bool found = false;
+					for (size_t k = 0; k < main.size(); ++k) {
+						if (main[k].id == anchorId) { boundElement = k; found = true; break; }
+					}
+					if (!found) boundElement = 0;
+				} else {
+					boundElement = 0;
+				}
+
+				size_t bound = (boundElement == 0) ? main.size() : boundElement;
+
+				auto it = std::lower_bound(
+					main.begin(),
+					main.begin() + std::min(bound, main.size()),
+					num_to_insert,
+					[&](const DChunk& A, const DChunk& B) {
+						return CountingLess()(A.data[pairsize - 1], B.data[pairsize - 1]);
+					}
+				);
+
+				// erase from pend by ID
+				auto it2 = std::find_if(pend.begin(), pend.end(),
+					[&](const DChunk& c){ return c.id == num_to_insert.id; });
+
+				if (it2 == pend.end()) {
+					if (it != main.begin() + std::min(bound, main.size()))
+						main.insert(it, num_to_insert);
+					else
+						main.push_back(num_to_insert);
+				} else {
+					if (it != main.begin() + std::min(bound, main.size()))
+						main.insert(it, num_to_insert);
+					else
+						main.insert(main.begin() + std::min(bound, main.size()), num_to_insert);
+					pend.erase(it2);
+				}
+
+				if (pend.empty()) {
+					// flatten main back to deq
+					size_t k = 0;
+					for (size_t j = 0; j < main.size(); ++j)
+						for (size_t l = 0; l < main[j].data.size(); ++l)
+							deq[k++] = main[j].data[l];
+					jacob = 3; jacob_prev = 1;
+					return;
+				}
+			}
+			size_t tmp = jacob;
+			jacob = jacob + 2 * jacob_prev;
+			jacob_prev = tmp;
+		}
+	};
+
+	mergeSortDeq(mergeSortDeq, /*pairsize*/1, /*insert*/false);
 }
