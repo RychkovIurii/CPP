@@ -23,12 +23,30 @@ def parse_after(output):
             return []
     return []
 
+def parse_comparisons(output):
+    actual_vec = actual_deq = max_comp = None
+    for line in output.splitlines():
+        if line.startswith("Actual vector comparisons:"):
+            actual_vec = int(line.split(":", 1)[1].strip())
+        elif line.startswith("Actual deque comparisons:"):
+            actual_deq = int(line.split(":", 1)[1].strip())
+        elif line.startswith("Max comparisons F(n):"):
+            max_comp = int(line.split(":", 1)[1].strip())
+    return actual_vec, actual_deq, max_comp
+
 
 def test_small():
     args = [3, 5, 9, 7, 4]
     res = run_cmd(args)
     assert res.returncode == 0, res.stderr
     assert parse_after(res.stdout) == sorted(args)
+    
+    # Check comparison counts
+    actual_vec, actual_deq, max_comp = parse_comparisons(res.stdout)
+    if actual_vec is not None and max_comp is not None:
+        assert actual_vec <= max_comp, f"Vector comparisons {actual_vec} exceed maximum {max_comp} for input {args}"
+    if actual_deq is not None and max_comp is not None:
+        assert actual_deq <= max_comp, f"Deque comparisons {actual_deq} exceed maximum {max_comp} for input {args}"
     print("✅ small input")
 
 
@@ -37,7 +55,46 @@ def test_large():
     res = run_cmd(args)
     assert res.returncode == 0, res.stderr
     assert parse_after(res.stdout) == sorted(args)
+    
+    # Check comparison counts for large input
+    actual_vec, actual_deq, max_comp = parse_comparisons(res.stdout)
+    if actual_vec is not None and max_comp is not None:
+        assert actual_vec <= max_comp, f"Vector comparisons {actual_vec} exceed maximum {max_comp} for {len(args)} elements"
+    if actual_deq is not None and max_comp is not None:
+        assert actual_deq <= max_comp, f"Deque comparisons {actual_deq} exceed maximum {max_comp} for {len(args)} elements"
     print("✅ large input")
+
+
+def test_comparison_validation():
+    """Test that comparison counts don't exceed theoretical maximum"""
+    test_cases = [
+        [1],
+        [2, 1],
+        [3, 1, 2],
+        [5, 3, 1, 4, 2],
+		[3, 5, 9, 7, 4],  # n=5
+        [8, 7, 6, 5, 4, 3, 2, 1],
+		list(range(10, 0, -1)),  # n=10, reverse sorted
+        list(range(20, 0, -1)),  # reverse sorted
+		[5] * 15,  # n=15, all duplicates
+        list(range(1, 21)),       # already sorted
+		[random.randint(1, 1000) for _ in range(50)],  # n=50, random
+        [random.randint(1, 1000) for _ in range(100)]
+    ]
+    
+    for args in test_cases:
+        res = run_cmd(args)
+        assert res.returncode == 0, f"Failed on input: {args}. Error: {res.stderr}"
+        assert parse_after(res.stdout) == sorted(args)
+        
+        actual_vec, actual_deq, max_comp = parse_comparisons(res.stdout)
+        
+        if actual_vec is not None and max_comp is not None:
+            assert actual_vec <= max_comp, f"Vector comparisons {actual_vec} exceed maximum {max_comp} for input: {args}"
+        if actual_deq is not None and max_comp is not None:
+            assert actual_deq <= max_comp, f"Deque comparisons {actual_deq} exceed maximum {max_comp} for input: {args}"
+    
+    print("✅ comparison validation")
 
 
 def test_invalid():
@@ -77,6 +134,13 @@ def test_already_sorted():
     res = run_cmd(args)
     assert res.returncode == 0, res.stderr
     assert parse_after(res.stdout) == sorted(args)
+    
+    # Check comparison counts - sorted input should be efficient
+    actual_vec, actual_deq, max_comp = parse_comparisons(res.stdout)
+    if actual_vec is not None and max_comp is not None:
+        assert actual_vec <= max_comp, f"Vector comparisons {actual_vec} exceed maximum {max_comp}"
+    if actual_deq is not None and max_comp is not None:
+        assert actual_deq <= max_comp, f"Deque comparisons {actual_deq} exceed maximum {max_comp}"
     print("✅ already sorted")
 
 
@@ -86,6 +150,13 @@ def test_reverse_sorted():
     res = run_cmd(args)
     assert res.returncode == 0, res.stderr
     assert parse_after(res.stdout) == sorted(args)
+    
+    # Check comparison counts - reverse sorted is worst case
+    actual_vec, actual_deq, max_comp = parse_comparisons(res.stdout)
+    if actual_vec is not None and max_comp is not None:
+        assert actual_vec <= max_comp, f"Vector comparisons {actual_vec} exceed maximum {max_comp}"
+    if actual_deq is not None and max_comp is not None:
+        assert actual_deq <= max_comp, f"Deque comparisons {actual_deq} exceed maximum {max_comp}"
     print("✅ reverse sorted")
 
 
@@ -93,8 +164,16 @@ def test_duplicates():
     """Test with duplicate numbers"""
     args = [5, 3, 5, 1, 3, 8, 1, 5]
     res = run_cmd(args)
-    assert res.returncode == 0, res.stderr
+    assert res.returncode == 0, f"Failed on duplicates: {args}. Error: {res.stderr}"
     assert parse_after(res.stdout) == sorted(args)
+    
+    # Check comparison counts
+    actual_vec, actual_deq, max_comp = parse_comparisons(res.stdout)
+    if actual_vec is not None and max_comp is not None:
+        assert actual_vec <= max_comp, f"Vector comparisons {actual_vec} exceed maximum {max_comp} for duplicates: {args}"
+    if actual_deq is not None and max_comp is not None:
+        assert actual_deq <= max_comp, f"Deque comparisons {actual_deq} exceed maximum {max_comp} for duplicates: {args}"
+    
     print("✅ duplicates")
 
 
@@ -102,8 +181,16 @@ def test_all_same():
     """Test with all identical numbers"""
     args = [7, 7, 7, 7, 7]
     res = run_cmd(args)
-    assert res.returncode == 0, res.stderr
+    assert res.returncode == 0, f"Failed on all same: {args}. Error: {res.stderr}"
     assert parse_after(res.stdout) == sorted(args)
+    
+    # Check comparison counts
+    actual_vec, actual_deq, max_comp = parse_comparisons(res.stdout)
+    if actual_vec is not None and max_comp is not None:
+        assert actual_vec <= max_comp, f"Vector comparisons {actual_vec} exceed maximum {max_comp} for all same: {args}"
+    if actual_deq is not None and max_comp is not None:
+        assert actual_deq <= max_comp, f"Deque comparisons {actual_deq} exceed maximum {max_comp} for all same: {args}"
+    
     print("✅ all same numbers")
 
 
@@ -112,8 +199,16 @@ def test_max_int():
     max_int = 2147483647  # INT_MAX
     args = [max_int, max_int - 1, max_int - 2, 1]
     res = run_cmd(args)
-    assert res.returncode == 0, res.stderr
+    assert res.returncode == 0, f"Failed on max int: {args}. Error: {res.stderr}"
     assert parse_after(res.stdout) == sorted(args)
+    
+    # Check comparison counts
+    actual_vec, actual_deq, max_comp = parse_comparisons(res.stdout)
+    if actual_vec is not None and max_comp is not None:
+        assert actual_vec <= max_comp, f"Vector comparisons {actual_vec} exceed maximum {max_comp} for max int: {args}"
+    if actual_deq is not None and max_comp is not None:
+        assert actual_deq <= max_comp, f"Deque comparisons {actual_deq} exceed maximum {max_comp} for max int: {args}"
+    
     print("✅ max int values")
 
 
@@ -121,8 +216,16 @@ def test_zero():
     """Test with zero values"""
     args = [0, 5, 0, 3, 0]
     res = run_cmd(args)
-    assert res.returncode == 0, res.stderr
+    assert res.returncode == 0, f"Failed on zero values: {args}. Error: {res.stderr}"
     assert parse_after(res.stdout) == sorted(args)
+    
+    # Check comparison counts
+    actual_vec, actual_deq, max_comp = parse_comparisons(res.stdout)
+    if actual_vec is not None and max_comp is not None:
+        assert actual_vec <= max_comp, f"Vector comparisons {actual_vec} exceed maximum {max_comp} for zero values: {args}"
+    if actual_deq is not None and max_comp is not None:
+        assert actual_deq <= max_comp, f"Deque comparisons {actual_deq} exceed maximum {max_comp} for zero values: {args}"
+    
     print("✅ zero values")
 
 
@@ -204,10 +307,18 @@ def test_very_large_input():
     """Test with very large valid input set"""
     args = [random.randint(1, 1000000) for _ in range(5000)]
     res = run_cmd(args)
-    assert res.returncode == 0, res.stderr
+    assert res.returncode == 0, f"Failed on very large input ({len(args)} elements). Error: {res.stderr}"
     result = parse_after(res.stdout)
-    assert result == sorted(args)
+    assert result == sorted(args), f"Sorting failed for very large input ({len(args)} elements)"
     assert len(result) == len(args)
+    
+    # Check comparison counts for very large input
+    actual_vec, actual_deq, max_comp = parse_comparisons(res.stdout)
+    if actual_vec is not None and max_comp is not None:
+        assert actual_vec <= max_comp, f"Vector comparisons {actual_vec} exceed maximum {max_comp} for large input ({len(args)} elements)"
+    if actual_deq is not None and max_comp is not None:
+        assert actual_deq <= max_comp, f"Deque comparisons {actual_deq} exceed maximum {max_comp} for large input ({len(args)} elements)"
+    
     print("✅ very large input (5000 elements)")
 
 
@@ -304,6 +415,17 @@ def test_subject_requirement_3000():
     assert result == sorted(args)
     assert len(result) == 3000
     
+    # Check comparison counts for 3000 elements
+    actual_vec, actual_deq, max_comp = parse_comparisons(res.stdout)
+    if actual_vec is not None and max_comp is not None:
+        assert actual_vec <= max_comp, f"Vector comparisons {actual_vec} exceed maximum {max_comp} for 3000 elements"
+        efficiency = (actual_vec / max_comp) * 100
+        print(f"  Vector efficiency: {actual_vec}/{max_comp} ({efficiency:.1f}%)")
+    if actual_deq is not None and max_comp is not None:
+        assert actual_deq <= max_comp, f"Deque comparisons {actual_deq} exceed maximum {max_comp} for 3000 elements"
+        efficiency = (actual_deq / max_comp) * 100
+        print(f"  Deque efficiency: {actual_deq}/{max_comp} ({efficiency:.1f}%)")
+    
     # Verify timing output mentions the correct count
     assert "3000 elements" in res.stdout
     print("✅ subject requirement: 3000 elements")
@@ -328,6 +450,7 @@ def run_all_tests():
         test_single_element,
         test_two_elements,
         test_small,
+        test_comparison_validation,  # Add comparison validation test
         test_already_sorted,
         test_reverse_sorted,
         test_duplicates,
