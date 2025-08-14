@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 11:08:40 by irychkov          #+#    #+#             */
-/*   Updated: 2025/08/14 10:17:42 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/08/14 10:36:29 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,10 @@ void PmergeMe::sortVector(std::vector<int> &vec) {
 	std::vector<int> smalls;
 	bigs.reserve((vec.size() + 1) / 2);    // Reserve space for efficiency
 	smalls.reserve(vec.size() / 2);
-	
+
+	bool hasLeftover = (vec.size() % 2 == 1);
+	int leftover = 0;
+
 	// Step 1: Pair elements and separate into bigs (larger) and smalls (smaller)
 	size_t i = 0;
 	for (; i + 1 < vec.size(); i += 2) {
@@ -147,9 +150,9 @@ void PmergeMe::sortVector(std::vector<int> &vec) {
 			smalls.push_back(a);   // a is smaller
 		}
 	}
-	// Handle odd-sized arrays: add the last unpaired element to bigs
-	if (vec.size() % 2 == 1)
-		bigs.push_back(vec.back());
+
+	if (hasLeftover)
+		leftover = vec.back();
 
 	// Keep a copy of the big elements before sorting to locate bounds later
 	std::vector<int> bigLinks = bigs;
@@ -184,6 +187,11 @@ void PmergeMe::sortVector(std::vector<int> &vec) {
 			bigs.insert(pos, val);
 		}
 	}
+
+	if (hasLeftover) {
+		auto pos = std::lower_bound(bigs.begin(), bigs.end(), leftover, CountingLess());
+		bigs.insert(pos, leftover);
+	}
 	
 	// Replace original vector with sorted result
 	vec.swap(bigs);
@@ -211,6 +219,9 @@ void PmergeMe::sortDeque(std::deque<int> &deq) {
 	std::deque<int> bigs;
 	std::deque<int> smalls;
 
+	bool hasLeftover = (deq.size() % 2 == 1);
+	int leftover = 0;
+
 	// Step 1: Pair elements and separate into bigs (larger) and smalls (smaller)
 	size_t i = 0;
 	for (; i + 1 < deq.size(); i += 2) {
@@ -224,9 +235,9 @@ void PmergeMe::sortDeque(std::deque<int> &deq) {
 			smalls.push_back(a);   // a is smaller
 		}
 	}
-	// Handle odd-sized arrays: add the last unpaired element to bigs
-	if (deq.size() % 2 == 1)
-		bigs.push_back(deq.back());
+
+	if (hasLeftover)
+		leftover = deq.back();
 
 	// Keep a copy of the big elements before sorting to locate bounds later
 	std::deque<int> bigLinks = bigs;
@@ -261,7 +272,12 @@ void PmergeMe::sortDeque(std::deque<int> &deq) {
 			bigs.insert(pos, val);
 		}
 	}
-	
+
+	if (hasLeftover) {
+		auto pos = std::lower_bound(bigs.begin(), bigs.end(), leftover, CountingLess());
+		bigs.insert(pos, leftover);
+	}
+
 	// Replace original deque with sorted result
 	deq.swap(bigs);
 }
