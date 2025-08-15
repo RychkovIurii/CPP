@@ -77,6 +77,7 @@ def test_comparison_validation():
         list(range(10, 0, -1)),  # n=10, reverse sorted
         list(range(20, 0, -1)),  # reverse sorted
         list(range(1, 21)),       # already sorted
+        [12, 5, 7, 3, 8, 6, 1, 4, 10, 2, 9],  # n=11, check full batch
         random.sample(range(1, 10000), 50),  # n=50, unique random
         random.sample(range(10001, 20000), 100)  # n=100, unique random
     ]
