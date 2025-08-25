@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 17:30:41 by irychkov          #+#    #+#             */
-/*   Updated: 2025/08/25 20:32:18 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/08/25 20:51:03 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 SpellBook :: SpellBook() {}
 
 SpellBook :: ~SpellBook() {
+	for (std::map<std::string, AMagic *>::iterator it = _spells.begin(); it != _spells.end(); ++it) {
+		delete it->second;
+	}
 	_spells.clear();
 }
 
@@ -25,6 +28,7 @@ void SpellBook :: learnSpell(AMagic *spell) {
 		if (it == _spells.end())
 			_spells[spell->getName()] = spell->clone();
 	}
+	//delete spell;
 }
 
 void SpellBook :: forgetSpell(std::string const &spellName) {

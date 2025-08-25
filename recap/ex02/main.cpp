@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 15:06:10 by irychkov          #+#    #+#             */
-/*   Updated: 2025/08/25 20:32:36 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/08/25 20:51:31 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@ int main( void )
 		richard.introduce();
 		richard.launchSpell("Polymorph", *wall);
 		richard.launchSpell("Fireball", *wall);
+		delete polymorph;
+		delete fireball;
+		delete wall;
 	}
 
   return (0);
