@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   NewSpell.hpp                                       :+:      :+:    :+:   */
+/*   BrickWall.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 17:13:29 by irychkov          #+#    #+#             */
-/*   Updated: 2025/08/25 17:38:59 by irychkov         ###   ########.fr       */
+/*   Created: 2025/08/25 17:30:57 by irychkov          #+#    #+#             */
+/*   Updated: 2025/08/25 17:38:47 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
-#include "AMagic.hpp"
+#include "ATarget.hpp"
 
-class NewSpell : public AMagic {
+class BrickWall : public ATarget {
 	public:
-		NewSpell();
-		virtual ~NewSpell();
-		virtual AMagic * clone() const override;
+		BrickWall();
+		virtual ~BrickWall();
+		virtual ATarget * clone() const override;
 };

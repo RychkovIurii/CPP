@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   NewSpell.hpp                                       :+:      :+:    :+:   */
+/*   Polymorph.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 17:13:29 by irychkov          #+#    #+#             */
-/*   Updated: 2025/08/25 17:38:59 by irychkov         ###   ########.fr       */
+/*   Created: 2025/08/25 17:30:47 by irychkov          #+#    #+#             */
+/*   Updated: 2025/08/25 17:34:46 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
-#include "AMagic.hpp"
+#include "Polymorph.hpp"
 
-class NewSpell : public AMagic {
-	public:
-		NewSpell();
-		virtual ~NewSpell();
-		virtual AMagic * clone() const override;
-};
+Polymorph :: Polymorph() : AMagic("Polymorph", "turned into a critter") {}
+
+Polymorph :: ~Polymorph() {}
+
+AMagic * Polymorph ::clone() const {
+	return new Polymorph();
+}

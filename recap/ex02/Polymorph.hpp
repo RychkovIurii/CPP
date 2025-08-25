@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   NewSpell.hpp                                       :+:      :+:    :+:   */
+/*   Polymorph.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 17:13:29 by irychkov          #+#    #+#             */
-/*   Updated: 2025/08/25 17:38:59 by irychkov         ###   ########.fr       */
+/*   Created: 2025/08/25 17:30:44 by irychkov          #+#    #+#             */
+/*   Updated: 2025/08/25 17:39:16 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 #include "AMagic.hpp"
 
-class NewSpell : public AMagic {
+class Polymorph : public AMagic {
 	public:
-		NewSpell();
-		virtual ~NewSpell();
+		Polymorph();
+		virtual ~Polymorph();
 		virtual AMagic * clone() const override;
 };

@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   NewSpell.hpp                                       :+:      :+:    :+:   */
+/*   Fireball.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 17:13:29 by irychkov          #+#    #+#             */
-/*   Updated: 2025/08/25 17:38:59 by irychkov         ###   ########.fr       */
+/*   Created: 2025/08/25 17:29:00 by irychkov          #+#    #+#             */
+/*   Updated: 2025/08/25 20:30:58 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 #include "AMagic.hpp"
 
-class NewSpell : public AMagic {
+class Fireball : public AMagic {
 	public:
-		NewSpell();
-		virtual ~NewSpell();
+		Fireball();
+		virtual ~Fireball();
 		virtual AMagic * clone() const override;
 };

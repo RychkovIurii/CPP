@@ -1,21 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   NewSpell.hpp                                       :+:      :+:    :+:   */
+/*   SpellBook.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 17:13:29 by irychkov          #+#    #+#             */
-/*   Updated: 2025/08/25 17:38:59 by irychkov         ###   ########.fr       */
+/*   Created: 2025/08/25 17:30:38 by irychkov          #+#    #+#             */
+/*   Updated: 2025/08/25 20:04:54 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
-#include "AMagic.hpp"
+#include <string>
+#include <map>
 
-class NewSpell : public AMagic {
+class AMagic;
+
+class SpellBook {
+	private:
+		std::map<std::string, AMagic *> _spells;
+		SpellBook(SpellBook &obj) = delete;
+		SpellBook &operator=(SpellBook &obj) = delete;
 	public:
-		NewSpell();
-		virtual ~NewSpell();
-		virtual AMagic * clone() const override;
+		SpellBook( void );
+		~SpellBook( void );
+		void learnSpell(AMagic*);
+		void forgetSpell(std::string const &);
+		AMagic* createSpell(std::string const &);
 };

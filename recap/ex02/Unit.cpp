@@ -6,7 +6,7 @@
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 15:06:08 by irychkov          #+#    #+#             */
-/*   Updated: 2025/08/25 16:53:00 by irychkov         ###   ########.fr       */
+/*   Updated: 2025/08/25 19:58:11 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,24 +41,17 @@ void Unit :: introduce() const {
 }
 
 void Unit :: learnSpell(AMagic *obj) {
-	if (obj != nullptr) {
-		std::map<std::string, AMagic *>::iterator it = _spells.find(obj->getName());
-		if (it == _spells.end())
-			_spells[obj->getName()] = obj->clone();
-	}
+	_spellbook.learnSpell(obj);
 }
 
 void Unit :: forgetSpell(const std::string &spellName) {
-	std::map<std::string, AMagic *>::iterator it = _spells.find(spellName);
-	if (it != _spells.end()) {
-		delete it->second;
-		_spells.erase(spellName);
-	}
+	_spellbook.forgetSpell(spellName);
 }
 
 void Unit :: launchSpell(const std::string &spellName, ATarget &obj) {
-	std::map<std::string, AMagic *>::iterator it = _spells.find(spellName);
-	if (it != _spells.end()) {
-		it->second->launch(obj);
+	AMagic *spell = _spellbook.createSpell(spellName);
+	if (spell != nullptr) {
+		spell->launch(obj);
+		delete spell;
 	}
 }
