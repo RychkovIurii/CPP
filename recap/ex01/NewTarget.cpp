@@ -1,38 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   NewTarget.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: irychkov <irychkov@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 15:06:10 by irychkov          #+#    #+#             */
-/*   Updated: 2025/08/25 17:23:31 by irychkov         ###   ########.fr       */
+/*   Created: 2025/08/25 17:13:44 by irychkov          #+#    #+#             */
+/*   Updated: 2025/08/25 17:21:18 by irychkov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Unit.hpp"
-#include "ATarget.hpp"
-#include "AMagic.hpp"
-#include <iostream>
-#include "NewSpell.hpp"
 #include "NewTarget.hpp"
 
-int main( void )
-{
-	{
-		 Unit richard("Richard", "the Titled");
+NewTarget :: NewTarget() : ATarget("someType") {}
 
-		NewTarget bob;
-		NewSpell* newSpell = new NewSpell();
+NewTarget :: ~NewTarget() {}
 
-		richard.learnSpell(newSpell);
-
-		richard.introduce();
-		richard.launchSpell("someName", bob);
-
-		richard.forgetSpell("someName");
-		richard.launchSpell("someName", bob);
-	}
-
-  return (0);
+ATarget * NewTarget ::clone() const {
+	return new NewTarget();
 }
